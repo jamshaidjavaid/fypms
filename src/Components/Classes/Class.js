@@ -1,0 +1,37 @@
+import { Link } from "react-router-dom";
+import { MdOutlineDeleteForever } from "react-icons/md";
+import Button from "../UI/Button";
+import CustomCard from "../UI/CustomCard";
+import classes from "./Class.module.css";
+
+const Class = (props) => {
+  return (
+    <div className={classes.container}>
+      <Link to={`./${props.item.id}`}>
+        <CustomCard onClick={props.classHandler}>
+          <div className={classes.class}>
+            <p className={classes.headline}>{props.item.name}</p>
+            <p className={classes.item}>
+              Total Students:<span>{props.item.students}</span>
+            </p>
+            <p className={classes.item}>
+              Total Projects:<span>{props.item.projects}</span>
+            </p>
+            <p className={classes.item}>
+              Total Supervisors:<span>{props.item.supervisors}</span>
+            </p>
+          </div>
+        </CustomCard>
+      </Link>
+      <div className={classes.buttons}>
+        <MdOutlineDeleteForever
+          className={classes.icon}
+          onClick={props.deleteHandler}
+        />
+        <Button onClick={props.passHandler}>Pass Class</Button>
+      </div>
+    </div>
+  );
+};
+
+export default Class;
