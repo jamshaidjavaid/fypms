@@ -60,7 +60,7 @@ const SupervisorsTable = () => {
     <div className={classes.container}>
       <div className={classes.head}>
         <p className={classes.name}>Supervisors</p>
-        <Link to={"/teachers/add-supervisor"}>
+        <Link to={"/assign-supervisor"}>
           <Button>Add Supervisor</Button>
         </Link>
       </div>

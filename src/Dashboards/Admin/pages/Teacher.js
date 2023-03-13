@@ -1,4 +1,4 @@
-import { TbEdit } from "react-icons/tb";
+// import { TbEdit } from "react-icons/tb";
 import { MdOutlineDeleteForever } from "react-icons/md";
 
 import TeacherComponent from "../../../Components/Teachers/TeacherComponent";
@@ -7,6 +7,7 @@ import ProjectTable from "../../../Components/Tables/ProjectTable";
 import CustomCard from "../../../Components/UI/CustomCard";
 
 import classes from "./Teacher.module.css";
+import { useState } from "react";
 
 const NOTICE_BOARD = [
   {
@@ -35,6 +36,36 @@ const NOTICE_BOARD = [
   },
 ];
 
+const UNDER_SUPERVISION = [
+  {
+    className: "BSIT-Mor-Fall (2019-23)",
+    classId: 1,
+  },
+  {
+    className: "BSIT-Mor-Fall (2019-23)",
+    classId: 2,
+  },
+  {
+    className: "BSIT-Mor-Fall (2019-23)",
+    classId: 3,
+  },
+];
+
+const UNDER_EXAMINATION = [
+  {
+    className: "BSIT-Mor-Fall (2019-23)",
+    classId: 1,
+  },
+  {
+    className: "BSIT-Mor-Fall (2019-23)",
+    classId: 2,
+  },
+  {
+    className: "BSIT-Mor-Fall (2019-23)",
+    classId: 3,
+  },
+];
+
 const TEACHER = {
   profile: {
     name: "Abdul Jabbar Khan",
@@ -45,6 +76,23 @@ const TEACHER = {
 };
 
 const Teacher = () => {
+  const [underSupervision, setUnderSupervision] = useState(UNDER_SUPERVISION);
+  const [underExamination, setUnderExamination] = useState(UNDER_EXAMINATION);
+
+  const deleteUnderSupervisionHandler = (id) => {
+    const updatedUnderSupervision = underSupervision.filter(
+      (classa) => classa.classId !== id
+    );
+    setUnderSupervision(updatedUnderSupervision);
+  };
+
+  const deleteUnderExaminationHandler = (id) => {
+    const updatedUnderExamination = underExamination.filter(
+      (classa) => classa.classId !== id
+    );
+    setUnderExamination(updatedUnderExamination);
+  };
+
   return (
     <div className={classes["main-container"]}>
       <div className={classes.left}>
@@ -55,9 +103,9 @@ const Teacher = () => {
               <div className={classes.limit}>
                 <p>Projects Limit</p>
                 <h4>10</h4>
-                <TbEdit className={classes.icon} />
               </div>
             </CustomCard>
+            {/* <TbESdit className={classes.icon} /> */}
             <CustomCard>
               <div className={classes.limit}>
                 <p>Projects Undertaken</p>
@@ -69,35 +117,38 @@ const Teacher = () => {
             <CustomCard>
               <div className={classes.box}>
                 <p className={classes.headline}>Classes Under Supervision</p>
-                <div className={classes.class}>
-                  <p>BSIT-Mor-Fall (2019-23)</p>
-                  <MdOutlineDeleteForever className={classes.icon} />
-                </div>
-                <div className={classes.class}>
-                  <p>BSIT-Mor-Fall (2019-23)</p>
-                  <MdOutlineDeleteForever className={classes.icon} />
-                </div>
-                <div className={classes.class}>
-                  <p>BSIT-Mor-Fall (2019-23)</p>
-                  <MdOutlineDeleteForever className={classes.icon} />
-                </div>
+
+                {underSupervision.map((classa) => {
+                  return (
+                    <div className={classes.class} key={classa.classId}>
+                      <p>{classa.className}</p>
+                      <MdOutlineDeleteForever
+                        onClick={() =>
+                          deleteUnderSupervisionHandler(classa.classId)
+                        }
+                        className={classes.icon}
+                      />
+                    </div>
+                  );
+                })}
               </div>
             </CustomCard>
             <CustomCard>
               <div className={classes.box}>
                 <p className={classes.headline}>Classes Under Examination</p>
-                <div className={classes.class}>
-                  <p>BSIT-Mor-Fall (2019-23)</p>
-                  <MdOutlineDeleteForever className={classes.icon} />
-                </div>
-                <div className={classes.class}>
-                  <p>BSIT-Mor-Fall (2019-23)</p>
-                  <MdOutlineDeleteForever className={classes.icon} />
-                </div>
-                <div className={classes.class}>
-                  <p>BSIT-Mor-Fall (2019-23)</p>
-                  <MdOutlineDeleteForever className={classes.icon} />
-                </div>
+                {underExamination.map((classa) => {
+                  return (
+                    <div className={classes.class} key={classa.classId}>
+                      <p>{classa.className}</p>
+                      <MdOutlineDeleteForever
+                        onClick={() =>
+                          deleteUnderExaminationHandler(classa.classId)
+                        }
+                        className={classes.icon}
+                      />
+                    </div>
+                  );
+                })}
               </div>
             </CustomCard>
           </div>

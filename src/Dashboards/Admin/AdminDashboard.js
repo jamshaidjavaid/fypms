@@ -10,6 +10,7 @@ import PersonalNotes from "./pages/PersonalNotes";
 import Settings from "./pages/Settings";
 import Class from "./pages/Class";
 import Teacher from "./pages/Teacher";
+import NewProject from "./pages/NewProject";
 import Project from "./pages/Project";
 import Sidebar from "../../Components/Navbar/Sidebar";
 import NoticeBoardComponent from "../../Components/NoticeBoards/NoticeBoardComponent";
@@ -23,15 +24,17 @@ const AdminDashboard = (props) => {
     <Sidebar links={props.links}>
       <Routes>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/classes/*" element={<Classes />} />
+        <Route path="/classes/" element={<Classes />} />
         <Route path="/classes/:classId" element={<Class />} />
         <Route
           path="/classes/:classId/edit-timetable"
           element={<EditTimeTable />}
         />
-        <Route path="/teachers/*" element={<Teachers />} />
+        <Route path="/teachers/" element={<Teachers />} />
+        {/* <Route path="/teachers/add-examiner" element={<AddExaminer />} /> */}
         <Route path="/teachers/:teacherId" element={<Teacher />} />
-        <Route path="/projects/*" element={<Projects />} />
+        <Route path="/projects/" element={<Projects />} />
+        <Route path="/projects/new-project" element={<NewProject />} />
         <Route path="/projects/:projectId" element={<Project />} />
         <Route path="/notice-board" element={<NoticeBoard />} />
         <Route path="/generate-list" element={<GenerateLists />} />
@@ -97,7 +100,7 @@ const NOTIFICATIONS = [
 
 const NOTICE_BOARD = [
   {
-    headline: "Presentations will be held on Friday, 09-02-23",
+    headline: "Ustad g will be held on Friday, 09-02-23",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     recieverEntity: "Class",

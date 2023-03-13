@@ -7,19 +7,19 @@ import Button from "../../../Components/UI/Button";
 import classes from "./PersonalNotes.module.css";
 
 const PersonalNotes = (props) => {
-  const [todos, setTodos] = useState([]);
-  const [newTodo, setNewTodo] = useState("");
+  const [notes, setNotes] = useState([]);
+  const [newNote, setNewNote] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setTodos([...todos, newTodo]);
-    setNewTodo("");
+    setNotes([...notes, newNote]);
+    setNewNote("");
   };
 
   const handleDelete = (index) => {
-    const newTodos = [...todos];
-    newTodos.splice(index, 1);
-    setTodos(newTodos);
+    const newNotes = [...notes];
+    newNotes.splice(index, 1);
+    setNotes(newNotes);
   };
 
   return (
@@ -28,22 +28,22 @@ const PersonalNotes = (props) => {
         <div className={classes.container}>
           <p className={classes.headline}>Your Personal Notes</p>
           <Form onSubmit={handleSubmit} className={classes.form}>
-            <Form.Group controlId="todo">
+            <Form.Group controlId="notes">
               <Form.Control
                 type="text"
-                placeholder="Enter a new todo"
-                value={newTodo}
-                onChange={(event) => setNewTodo(event.target.value)}
+                placeholder="Enter a new note"
+                value={newNote}
+                onChange={(event) => setNewNote(event.target.value)}
                 required
               />
             </Form.Group>
             <Button type="submit">Add</Button>
           </Form>
           <ListGroup className="my-3">
-            {todos.map((todo, index) => (
+            {notes.map((note, index) => (
               <ListGroup.Item key={index}>
                 <div className={classes.item}>
-                  <p className={classes.description}>{todo}</p>
+                  <p className={classes.description}>{note}</p>
                   <Button onClick={() => handleDelete(index)}>Delete</Button>
                 </div>
               </ListGroup.Item>

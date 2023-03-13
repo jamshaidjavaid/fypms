@@ -1,5 +1,6 @@
 .main_container {
   display: flex;
+  z-index: 200;
 }
 main {
   background-color: #f3f3f3;

@@ -5,6 +5,10 @@ import CustomCard from "../UI/CustomCard";
 import classes from "./Class.module.css";
 
 const Class = (props) => {
+  const deleteClassHandler = (id) => {
+    props.onDeleteClass(id);
+  };
+
   return (
     <div className={classes.container}>
       <Link to={`./${props.item.id}`}>
@@ -26,7 +30,7 @@ const Class = (props) => {
       <div className={classes.buttons}>
         <MdOutlineDeleteForever
           className={classes.icon}
-          onClick={props.deleteHandler}
+          onClick={() => deleteClassHandler(props.item.id)}
         />
         <Button onClick={props.passHandler}>Pass Class</Button>
       </div>

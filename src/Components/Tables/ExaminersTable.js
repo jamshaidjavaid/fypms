@@ -60,7 +60,7 @@ const ExaminersTable = () => {
     <div className={classes.container}>
       <div className={classes.head}>
         <p className={classes.name}>Examiners</p>
-        <Link to={"/teachers/add-examiner"}>
+        <Link to={"./assign-examiner"}>
           <Button>Add Examiner</Button>
         </Link>
       </div>

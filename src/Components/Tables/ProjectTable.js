@@ -61,7 +61,7 @@ const ProjectTable = (props) => {
       <div className={classes.head}>
         <p className={classes.name}>{props.label}</p>
         {props.button && (
-          <Link to={"/projects/new/project"}>
+          <Link to={"/projects/new-project"}>
             <Button>Add Project</Button>
           </Link>
         )}
