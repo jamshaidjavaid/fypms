@@ -1,72 +1,21 @@
-# Getting Started with Create React App
+Final Year Project Management System for University
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Introduction:
 
-## Available Scripts
+This project aims to develop an online platform to facilitate the completion of final year projects (FYP) for the information technology department. The FYP is a crucial component of the department's curriculum, where groups of students work under the guidance of a supervisor to complete a theme-based project. The platform will utilize cutting-edge technology to enhance collaboration and communication among the three key user groups: FYP programme organizers, project supervisors, and project group members. The goal of this project is to create a complete web-based system that streamlines the FYP process and enhances the overall experience for all involved parties.
 
-In the project directory, you can run:
+Problem Statement:
 
-### `npm start`
+In the current digital age, many organizations, including universities, are moving towards digitization of their data through the implementation of learning management systems. However, the management of final year projects (FYP) within universities continues to rely on traditional and outdated techniques. The Project Management Office (PMO) is responsible for overseeing all aspects of the FYP process, including student groups, supervisors, evaluations, submissions, and schedules. Without a digital and automated project management system, the PMO faces difficulties in effectively managing these tasks. Additionally, student groups engaged in FYP projects would benefit from a system that allows for not only project management, but also virtual collaboration and communication with their supervisors and peers. Therefore, a system is needed to assist the PMO in managing all aspects of the FYP process, aid supervisors in their supervision of projects, and assist students in managing their projects, facilitating virtual discussions, sharing resources, and communicating with their supervisor.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Goals and Objectives:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The primary goal of the proposed system is to improve the efficiency and effectiveness of the FYP process by reducing manual work for the PMO.
+Enhance communication among students, supervisors, administration, and coordinators through the implementation of the system.
+Provide students with a project management system that will prepare them for experiences in the technology industry.
+Facilitate faster retrieval of data through the organization and storage of records in a database.
+Streamline the grade submission process for supervisors through the implementation of an online grade entry system, which will update the database in real-time, providing a faster alternative to traditional email-based submission methods.
+Offer students the ability to conduct virtual meetings, send messages, and share resources on a single platform to improve collaboration and communication among project team members.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# fypms
-# fypms
