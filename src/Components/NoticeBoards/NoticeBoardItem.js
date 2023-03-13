@@ -14,7 +14,7 @@ const NoticeBoardItem = (props) => {
         <p className={classes.description}>{props.item.description}</p>
         {props.reciever && (
           <p className={classes.reciever}>
-            {props.item.recieverEntity}: <span>{props.item.reciever}</span>
+            {props.item.receiverEntity}: <span>{props.item.receiverName}</span>
           </p>
         )}
         <hr />

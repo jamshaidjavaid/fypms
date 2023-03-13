@@ -25,12 +25,12 @@ const NoticeBoardComponent = (props) => {
 
   const customclass = props.wide ? classes.wide : "";
 
-  const noticeItems = notices.slice(0, limit).map((item, index) => {
+  const noticeItems = notices.slice(0, limit).map((item) => {
     return (
       <NoticeBoardItem
         onDeleteNotice={deleteNoticeHandler}
         reciever={props.reciever}
-        key={index}
+        key={item.id}
         item={item}
       />
     );

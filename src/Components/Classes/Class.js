@@ -12,17 +12,17 @@ const Class = (props) => {
   return (
     <div className={classes.container}>
       <Link to={`./${props.item.id}`}>
-        <CustomCard onClick={props.classHandler}>
+        <CustomCard>
           <div className={classes.class}>
             <p className={classes.headline}>{props.item.name}</p>
             <p className={classes.item}>
-              Total Students:<span>{props.item.students}</span>
+              Total Students:<span>{props.item.totalStudents}</span>
             </p>
             <p className={classes.item}>
-              Total Projects:<span>{props.item.projects}</span>
+              Total Projects:<span>{props.item.totalProjects}</span>
             </p>
             <p className={classes.item}>
-              Total Supervisors:<span>{props.item.supervisors}</span>
+              Total Supervisors:<span>{props.item.assignedSupervisors}</span>
             </p>
           </div>
         </CustomCard>
