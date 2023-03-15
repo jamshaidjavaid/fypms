@@ -9,7 +9,7 @@ import classes from "./DetailedProjectTable.module.css";
 const DetailedProjectTable = (props) => {
   const { label, projects } = props;
 
-  const [limit, setLimit] = useState(7);
+  const [limit, setLimit] = useState(15);
   const [searchQuery, setSearchQuery] = useState("");
 
   const loadMoreHandler = () => {
@@ -32,16 +32,16 @@ const DetailedProjectTable = (props) => {
   );
 
   const tableBody = filteredProjects.slice(0, limit).map((project, index) => {
-    const members = project.members.map((member, index) => {
-      return <span key={index}>{member.first}, </span>;
+    const members = project.memberNames.map((member) => {
+      return <span key={member.id}>{member.name.split(" ")[0]}, </span>;
     });
     return (
       <tr key={index}>
-        <td>{project.id}</td>
         <td>{project.title}</td>
         <td className={classes.center}>{members}</td>
-        <td className={classes.center}>{project.supervisor}</td>
-        <td className={classes.center}>{project.class}</td>
+        <td className={classes.center}>{project.supervisorName}</td>
+        <td className={classes.center}>{project.className}</td>
+        <td className={classes.center}>{project.status}</td>
         <td className={classes.center}>
           <Link to={`./${project.id}`}>
             <Button>Details</Button>
@@ -67,32 +67,34 @@ const DetailedProjectTable = (props) => {
           </Button>
         </Form>
         {props.button && (
-          <Link to={"/projects/new/project"}>
+          <Link to={"/projects/new-project"}>
             <Button>Add Project</Button>
           </Link>
         )}
       </div>
-
-      <Table responsive hover className={classes.table}>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th className={classes.center}>Members</th>
-            <th className={classes.center}>Supervisor</th>
-            <th className={classes.center}>Class</th>
-            <th className={classes.center}></th>
-          </tr>
-        </thead>
-        <tbody>
-          {projects.length > 0 ? tableBody : <p>There are no item to show!</p>}
-        </tbody>
-        {limit < projects.length && (
-          <p className={classes.load} onClick={loadMoreHandler}>
-            Load More
-          </p>
-        )}
-      </Table>
+      {projects.length > 0 && (
+        <Table responsive hover className={classes.table}>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th className={classes.center}>Members</th>
+              <th className={classes.center}>Supervisor</th>
+              <th className={classes.center}>Class</th>
+              <th className={classes.center}>Status</th>
+              <th className={classes.center}></th>
+            </tr>
+          </thead>
+          <tbody>{tableBody}</tbody>
+        </Table>
+      )}
+      {projects.length === 0 && (
+        <p style={{ color: "red" }}>There are no projects to show!</p>
+      )}
+      {limit < projects.length && (
+        <p className={classes.load} onClick={loadMoreHandler}>
+          Load More
+        </p>
+      )}
     </div>
   );
 };

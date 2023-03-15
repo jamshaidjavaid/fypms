@@ -6,7 +6,7 @@ const NotificationItem = (props) => {
       <p className={classes.headline}>{props.item.headline}</p>
       <p className={classes.description}>{props.item.description}</p>
       <p className={classes.sender}>
-        Sender: <span>{props.item.sender}</span>
+        Sender: <span>{props.item.senderName}</span>
       </p>
       <hr />
     </div>

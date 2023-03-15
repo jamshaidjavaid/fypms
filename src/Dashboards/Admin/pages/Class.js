@@ -9,38 +9,13 @@ import StudentsTable from "../../../Components/Tables/StudentTable";
 import SupervisorsTable from "../../../Components/Tables/SupervisorsTable";
 import ExaminersTable from "../../../Components/Tables/ExaminersTable";
 import CustomCard from "../../../Components/UI/CustomCard";
+import SpinnerModal from "../../../Components/UI/SpinnerModal";
 import Button from "../../../Components/UI/Button";
 
 import classes from "./Class.module.css";
-// const NOTICE_BOARD = [
-//   {
-//     headline: "Presentations will be held on Friday, 09-02-23",
-//     description:
-//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-//     recieverEntity: "Class",
-//     reciever: "BSIT-Mor-Fall (2019-23)",
-//     id: 1,
-//   },
-//   {
-//     headline: "Presentations will be held on Friday, 09-02-23",
-//     description:
-//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-//     recieverEntity: "Class",
-//     reciever: "BSIT-Mor-Fall (2019-23)",
-//     id: 2,
-//   },
-//   {
-//     headline: "Presentations will be held on Friday, 09-02-23",
-//     description:
-//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-//     recieverEntity: "Class",
-//     reciever: "BSIT-Mor-Fall (2019-23)",
-//     id: 3,
-//   },
-// ];
 
 const Class = () => {
-  const [pageState, setPageState] = useState();
+  const [pageState, setPageState] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const { classId } = useParams();
 
@@ -48,7 +23,7 @@ const Class = () => {
   useEffect(() => {
     const loadPage = async () => {
       const response = await ApiCall({
-        params: {},
+        params: { classId },
         route: `admin/classes/${classId}`,
         verb: "get",
         token: "jwt_token",
@@ -81,9 +56,8 @@ const Class = () => {
     }
   }
 
-  console.log("page rendered");
-
-  // const className = "BSIT-Mor-Fall (201lll9-23)";
+  // console.log("page rendered");
+  // console.log(pageState);
 
   return (
     <div>
@@ -91,10 +65,18 @@ const Class = () => {
         <div className={classes["main-container"]}>
           <div>
             <p>Class: {pageState.myClass.name}</p>
-            <ProjectTable label={"Projects"} button={true} />
-            <SupervisorsTable />
-            <StudentsTable />
-            <ExaminersTable />
+            <hr />
+            <ProjectTable
+              projects={pageState.projects}
+              label={"Projects"}
+              button={true}
+            />
+            <hr />
+            <SupervisorsTable supervisors={pageState.supervisors} />
+            <hr />
+            <StudentsTable students={pageState.students} />
+            <hr />
+            <ExaminersTable examiners={pageState.examiners} />
           </div>
           <div className={classes.right}>
             <CustomCard>
@@ -159,6 +141,7 @@ const Class = () => {
           </div>
         </div>
       )}
+      {isLoading && <SpinnerModal />}
     </div>
   );
 };

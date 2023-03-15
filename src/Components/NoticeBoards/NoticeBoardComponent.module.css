@@ -26,3 +26,7 @@
 .load:hover {
   color: rgba(39, 125, 255, 1);
 }
+
+.notice-container button {
+  width: 100%;
+}

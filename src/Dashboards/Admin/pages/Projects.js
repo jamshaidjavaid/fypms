@@ -1,123 +1,47 @@
-import DetailedProjectTable from "../../../Components/Tables/DetailedProjectTable";
+import { useState, useEffect } from "react";
 
+import { ApiCall } from "../../../api/apiCall";
+
+import DetailedProjectTable from "../../../Components/Tables/DetailedProjectTable";
+import SpinnerModal from "../../../Components/UI/SpinnerModal";
 import classes from "./Projects.module.css";
 
-const PROJECTS = [
-  {
-    id: "IT-22-01",
-    title: "Final Year Project Management System",
-    members: [
-      {
-        first: "Jamshaid",
-        last: "Javaid",
-      },
-      {
-        first: "Mubashar",
-        last: "Ali",
-      },
-      {
-        first: "Muhammad",
-        last: "Ahtesham",
-      },
-    ],
-    supervisor: "John Doe",
-    class: "BSIT-Mor-Fall (2019-23)",
-  },
-  {
-    id: "IT-22-01",
-    title: "Final Year Project Management System",
-    members: [
-      {
-        first: "Jamshaid",
-        last: "Javaid",
-      },
-      {
-        first: "Mubashar",
-        last: "Ali",
-      },
-      {
-        first: "Muhammad",
-        last: "Ahtesham",
-      },
-    ],
-    supervisor: "John Doe",
-    class: "BSIT-Mor-Fall (2019-23)",
-  },
-  {
-    id: "IT-22-01",
-    title: "Final Year Project Management System",
-    members: [
-      {
-        first: "Jamshaid",
-        last: "Javaid",
-      },
-      {
-        first: "Mubashar",
-        last: "Ali",
-      },
-      {
-        first: "Muhammad",
-        last: "Ahtesham",
-      },
-    ],
-    supervisor: "John Doe",
-    class: "BSIT-Mor-Fall (2019-23)",
-  },
-  {
-    id: "IT-22-01",
-    title: "Final Year Project Management System",
-    members: [
-      {
-        first: "Jamshaid",
-        last: "Javaid",
-      },
-      {
-        first: "Mubashar",
-        last: "Ali",
-      },
-      {
-        first: "Muhammad",
-        last: "Ahtesham",
-      },
-    ],
-    supervisor: "John Doe",
-    class: "BSIT-Mor-Fall (2019-23)",
-  },
-  {
-    id: "CS-22-01",
-    title: "Hello Year Project Management System",
-    members: [
-      {
-        first: "Jamshaid",
-        last: "Javaid",
-      },
-      {
-        first: "Mubashar",
-        last: "Ali",
-      },
-      {
-        first: "Muhammad",
-        last: "Ahtesham",
-      },
-    ],
-    supervisor: "John Doe",
-    class: "BSIT-Mor-Fall (2019-23)",
-  },
-];
+const Projects = () => {
+  const [pageState, setPageState] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
-const Projects = (props) => {
+  useEffect(() => {
+    const loadPage = async () => {
+      const response = await ApiCall({
+        params: {},
+        route: `admin/projects`,
+        verb: "get",
+        token: "jwt_token",
+        baseurl: true,
+      });
+
+      if (response && response.status === 200) {
+        setPageState(response.response);
+        setIsLoading(false);
+      } else {
+        console.log(response);
+      }
+    };
+    loadPage();
+  }, []);
+
   return (
-    <div className={classes.container}>
-      <DetailedProjectTable
-        projects={PROJECTS}
-        label={"All Projects"}
-        button={true}
-      />
-      <DetailedProjectTable
-        projects={PROJECTS}
-        label={"All Projects"}
-        button={false}
-      />
+    <div>
+      {!isLoading && (
+        <div className={classes.container}>
+          <DetailedProjectTable
+            projects={pageState.projects}
+            label={"All Projects"}
+            button={true}
+          />
+        </div>
+      )}
+      {isLoading && <SpinnerModal />}
     </div>
   );
 };

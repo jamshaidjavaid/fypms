@@ -11,11 +11,9 @@ const NotificationsComponent = (props) => {
     setLimit((prevlimit) => prevlimit + 3);
   };
 
-  const notificationItems = props.notifications
-    .slice(0, limit)
-    .map((item, index) => {
-      return <NotificationItem key={index} item={item} />;
-    });
+  const notificationItems = props.notifications.slice(0, limit).map((item) => {
+    return <NotificationItem key={item.id} item={item} />;
+  });
 
   return (
     <CustomCard>

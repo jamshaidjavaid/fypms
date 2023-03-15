@@ -7,7 +7,11 @@ import classes from "./TeacherComponent.module.css";
 const TeacherComponent = (props) => {
   return (
     <div className={classes.container}>
-      <img className={classes.img} src={props.teacher.imgSrc} alt="teacher" />
+      <img
+        className={classes.img}
+        src={"./images/teachers.jpg"}
+        alt="teacher"
+      />
       <Card className={`${classes.box} text-center`} style={{ width: "15rem" }}>
         <Card.Body className={classes.card}>
           <Card.Title>{props.teacher.name}</Card.Title>
@@ -20,7 +24,7 @@ const TeacherComponent = (props) => {
           {props.button === false ? (
             ""
           ) : (
-            <Link to={`./${props.teacher.empId}`}>
+            <Link to={`./${props.teacher.id}`}>
               <Button>Details</Button>
             </Link>
           )}

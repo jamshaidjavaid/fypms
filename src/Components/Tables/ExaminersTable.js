@@ -5,39 +5,8 @@ import { useState } from "react";
 import Button from "../UI/Button";
 import classes from "./SupervisorsTable.module.css";
 
-const ExaminersTable = () => {
-  const EXAMINERS = [
-    {
-      name: "Muhammad Nawaz",
-      empId: "bsf1900334",
-      undertaken: 3,
-      projectLimit: 5,
-    },
-    {
-      name: "Muhammad Nawaz",
-      empId: "bsf1900334",
-      undertaken: 3,
-      projectLimit: 5,
-    },
-    {
-      name: "Muhammad Nawaz",
-      empId: "bsf1900334",
-      undertaken: 3,
-      projectLimit: 5,
-    },
-    {
-      name: "Muhammad Nawaz",
-      empId: "bsf1900334",
-      undertaken: 3,
-      projectLimit: 5,
-    },
-    {
-      name: "Muhammad Nawaz",
-      empId: "bsf1900334",
-      undertaken: 3,
-      projectLimit: 5,
-    },
-  ];
+const ExaminersTable = (props) => {
+  const { examiners } = props;
 
   const [limit, setLimit] = useState(4);
 
@@ -45,13 +14,12 @@ const ExaminersTable = () => {
     setLimit((prevlimit) => prevlimit + 3);
   };
 
-  const tableBody = EXAMINERS.slice(0, limit).map((examiner, index) => {
+  const tableBody = examiners.slice(0, limit).map((examiner) => {
     return (
-      <tr key={index}>
+      <tr key={examiner.id}>
         <td>{examiner.name}</td>
         <td className={classes.center}>{examiner.empId}</td>
-        <td className={classes.center}>{examiner.undertaken}</td>
-        <td className={classes.center}>{examiner.projectLimit}</td>
+        <td className={classes.center}>{examiner.designation}</td>
       </tr>
     );
   });
@@ -64,25 +32,26 @@ const ExaminersTable = () => {
           <Button>Add Examiner</Button>
         </Link>
       </div>
-
-      <Table responsive hover className={classes.table}>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th className={classes.center}>Emp ID</th>
-            <th className={classes.center}>Undertaken</th>
-            <th className={classes.center}>Limit</th>
-          </tr>
-        </thead>
-        <tbody>
-          {EXAMINERS.length > 0 ? tableBody : <p>There is no items to show!</p>}
-        </tbody>
-        {limit < EXAMINERS.length && (
-          <p className={classes.load} onClick={loadMoreHandler}>
-            Load More
-          </p>
-        )}
-      </Table>
+      {examiners.length > 0 && (
+        <Table responsive hover className={classes.table}>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th className={classes.center}>Emp ID</th>
+              <th className={classes.center}>Designation</th>
+            </tr>
+          </thead>
+          <tbody>{tableBody}</tbody>
+        </Table>
+      )}
+      {examiners.length === 0 && (
+        <p style={{ color: "red" }}>There are no examiners to show!</p>
+      )}
+      {limit < examiners.length && (
+        <p className={classes.load} onClick={loadMoreHandler}>
+          Load More
+        </p>
+      )}
     </div>
   );
 };

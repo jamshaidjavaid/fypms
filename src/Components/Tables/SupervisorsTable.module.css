@@ -1,9 +1,6 @@
 .container {
   margin-top: 1rem;
   width: 42rem;
-  /* display: flex;
-  flex-direction: column;
-  align-items: flex-end; */
 }
 .name {
   color: #6759d1;
@@ -51,6 +48,7 @@
   color: #6759d1;
   cursor: pointer;
   font-size: small;
+  transform: translate(300px, -15px);
 }
 
 .load:hover {

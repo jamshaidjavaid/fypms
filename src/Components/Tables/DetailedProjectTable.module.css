@@ -50,6 +50,7 @@
   color: #6759d1;
   cursor: pointer;
   font-size: small;
+  transform: translate(500px, -15px);
 }
 
 .load:hover {

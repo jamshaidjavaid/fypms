@@ -41,7 +41,8 @@ const NoticeBoardComponent = (props) => {
       <div className={`${classes["notice-container"]} ${customclass}`}>
         <p className={classes.head}>Notice Board</p>
         <Button>Add Notice</Button>
-        {noticeItems}
+        {notices.length > 0 && noticeItems}
+        {!notices.length && <p>No notices to show here!</p>}
         {limit < notices.length && (
           <p className={classes.load} onClick={loadMoreHandler}>
             Load More

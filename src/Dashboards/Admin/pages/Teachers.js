@@ -1,129 +1,89 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BiSearchAlt } from "react-icons/bi";
 import { Form } from "react-bootstrap";
 
+import { ApiCall } from "../../../api/apiCall";
+
 import TeacherComponent from "../../../Components/Teachers/TeacherComponent";
 import Button from "../../../Components/UI/Button";
+import SpinnerModal from "../../../Components/UI/SpinnerModal";
 import classes from "./Teachers.module.css";
 
-const TEACHERS = [
-  {
-    name: "Abdul Jabbar Khan",
-    designation: "Ass. Professor",
-    empId: "2019-UE-00670",
-    imgSrc: "/images/teachers.jpg",
-  },
-  {
-    name: "Abdul Jabbar Khan",
-    designation: "Ass. Professor",
-    empId: "2019-UE-00670",
-    imgSrc: "/images/teachers.jpg",
-  },
-  {
-    name: "Abdul Jabbar Khan",
-    designation: "Ass. Professor",
-    empId: "2019-UE-00670",
-    imgSrc: "/images/teachers.jpg",
-  },
-  {
-    name: "Abdul Jabbar Khan",
-    designation: "Ass. Professor",
-    empId: "2019-UE-00670",
-    imgSrc: "/images/teachers.jpg",
-  },
-  {
-    name: "Abdul Jabbar Khan",
-    designation: "Ass. Professor",
-    empId: "2019-UE-00670",
-    imgSrc: "/images/teachers.jpg",
-  },
-  {
-    name: "Abdul Jabbar Khan",
-    designation: "Ass. Professor",
-    empId: "2019-UE-00670",
-    imgSrc: "/images/teachers.jpg",
-  },
-  {
-    name: "ustad sb kia",
-    designation: "Ass. Professor",
-    empId: "2019-UE-00670",
-    imgSrc: "/images/teachers.jpg",
-  },
-  {
-    name: "Abdul Jabbar Khan",
-    designation: "Ass. Professor",
-    empId: "2019-UE-00670",
-    imgSrc: "/images/teachers.jpg",
-  },
-  {
-    name: "Abdul Jabbar Khan",
-    designation: "Ass. Professor",
-    empId: "2018-UE-00670",
-    imgSrc: "/images/teachers.jpg",
-  },
-  {
-    name: "Abdul Jabbar Khan",
-    designation: "Ass. Professor",
-    empId: "2019-UE-00670",
-    imgSrc: "/images/teachers.jpg",
-  },
-  {
-    name: "Abdul Jabbar Khan",
-    designation: "Ass. Professor",
-    empId: "2019-UE-00670",
-    imgSrc: "/images/teachers.jpg",
-  },
-  {
-    name: "Abdul Jabbar Khan",
-    designation: "Ass. Professor",
-    empId: "2019-UE-00670",
-    imgSrc: "/images/teachers.jpg",
-  },
-];
+const Teachers = () => {
+  const [pageState, setPageState] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
-const Teachers = (props) => {
+  useEffect(() => {
+    const loadPage = async () => {
+      const response = await ApiCall({
+        params: {},
+        route: `admin/teachers`,
+        verb: "get",
+        token: "jwt_token",
+        baseurl: true,
+      });
+
+      if (response && response.status === 200) {
+        setPageState(response.response);
+        setIsLoading(false);
+      } else {
+        console.log(response);
+      }
+    };
+    loadPage();
+  }, []);
+
   const searchHandler = (e) => {
     e.preventDefault();
     setSearchQuery(e.target.value);
   };
-  const [searchQuery, setSearchQuery] = useState("");
 
   const onSubmitSearchHandler = (e) => {
     e.preventDefault();
   };
 
-  const filteredTeachers = TEACHERS.filter(
-    (teacher) =>
-      teacher.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      teacher.empId.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  let teachersProfiles;
 
-  const teachersProfiles =
-    filteredTeachers.length > 0 ? (
-      filteredTeachers.map((teacher, index) => {
-        return <TeacherComponent key={index} teacher={teacher} />;
-      })
-    ) : (
-      <p>No teachers to show</p>
+  if (!isLoading) {
+    const filteredTeachers = pageState.teachers.filter(
+      (teacher) =>
+        teacher.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        teacher.empId.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
+    teachersProfiles =
+      filteredTeachers.length > 0 ? (
+        filteredTeachers.map((teacher) => {
+          return <TeacherComponent key={teacher.id} teacher={teacher} />;
+        })
+      ) : (
+        <p>No teachers to show</p>
+      );
+  }
+
   return (
-    <div className={classes.container}>
-      <div className={classes.top}>
-        <h4>All Teachers</h4>
-        <Form className="d-flex" onSubmit={onSubmitSearchHandler}>
-          <Form.Control
-            className={`${classes.search} mr-2`}
-            type="search"
-            placeholder="Search ID or Name"
-            onChange={searchHandler}
-          />
-          <Button type="submit">
-            <BiSearchAlt />
-          </Button>
-        </Form>
-      </div>
-      <div className={classes.teachers}>{teachersProfiles}</div>
+    <div>
+      {!isLoading && (
+        <div className={classes.container}>
+          <div className={classes.top}>
+            <h4>All Teachers</h4>
+            <Form className="d-flex" onSubmit={onSubmitSearchHandler}>
+              <Form.Control
+                className={`${classes.search} mr-2`}
+                type="search"
+                placeholder="Search ID or Name"
+                onChange={searchHandler}
+              />
+              <Button type="submit">
+                <BiSearchAlt />
+              </Button>
+            </Form>
+          </div>
+          <div className={classes.teachers}>{teachersProfiles}</div>
+        </div>
+      )}
+      {isLoading && <SpinnerModal />}
     </div>
   );
 };
