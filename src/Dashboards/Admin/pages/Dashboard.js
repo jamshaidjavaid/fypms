@@ -26,6 +26,7 @@ export const Dashboard = () => {
         setIsLoading(false);
       } else {
         console.log(response);
+        setIsLoading(false);
       }
     };
 

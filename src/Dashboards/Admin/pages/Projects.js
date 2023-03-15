@@ -25,6 +25,7 @@ const Projects = () => {
         setIsLoading(false);
       } else {
         console.log(response);
+        setIsLoading(false);
       }
     };
     loadPage();

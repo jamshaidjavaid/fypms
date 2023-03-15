@@ -5,37 +5,6 @@ import { ApiCall } from "../../../api/apiCall";
 import Class from "../../../Components/Classes/Class";
 import classes from "./Classes.module.css";
 
-// const CLASSES = [
-//   {
-//     name: "BSIT-Mor-Fall (2019-23)",
-//     supervisors: 12,
-//     projects: 17,
-//     students: 47,
-//     id: 1,
-//   },
-//   {
-//     name: "BSIT-Mor-Fall (2019-23)",
-//     supervisors: 12,
-//     projects: 17,
-//     students: 47,
-//     id: 2,
-//   },
-//   {
-//     name: "BSIT-Mor-Fall (2019-23)",
-//     supervisors: 12,
-//     projects: 17,
-//     students: 47,
-//     id: 3,
-//   },
-//   {
-//     name: "BSIT-Mor-Fall (2019-23)",
-//     supervisors: 12,
-//     projects: 17,
-//     students: 47,
-//     id: 4,
-//   },
-// ];
-
 const Classes = () => {
   const [allClasses, setClasses] = useState([]);
 

@@ -30,6 +30,7 @@ const Project = () => {
         setIsLoading(false);
       } else {
         console.log(response);
+        setIsLoading(false);
       }
     };
     loadPage();

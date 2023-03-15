@@ -33,6 +33,7 @@ const Teacher = () => {
         setIsLoading(false);
       } else {
         console.log(response);
+        setIsLoading(false);
       }
     };
     loadPage();

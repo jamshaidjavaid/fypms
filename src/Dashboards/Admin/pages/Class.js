@@ -35,6 +35,7 @@ const Class = () => {
         setIsLoading(false);
       } else {
         console.log(response);
+        setIsLoading(false);
       }
     };
     loadPage();

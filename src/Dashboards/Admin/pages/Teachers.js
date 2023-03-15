@@ -29,6 +29,7 @@ const Teachers = () => {
         setIsLoading(false);
       } else {
         console.log(response);
+        setIsLoading(false);
       }
     };
     loadPage();

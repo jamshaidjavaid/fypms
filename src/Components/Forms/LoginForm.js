@@ -88,11 +88,11 @@ const LoginForm = () => {
       dispatch(authActions.login(state.input));
 
       if (state.input.rememberMe) {
-        localStorage.setItem("email", state.input.userID);
+        localStorage.setItem("userID", state.input.userID);
         localStorage.setItem("password", state.input.password);
         localStorage.setItem("loginAs", state.input.loginAs);
       } else {
-        localStorage.removeItem("email");
+        localStorage.removeItem("userID");
         localStorage.removeItem("password");
         localStorage.removeItem("loginAs");
       }
@@ -116,7 +116,7 @@ const LoginForm = () => {
           <Form.Group className={classes.formgroup} as={Col} controlId="userID">
             <Form.Control
               className={classes.control}
-              type="email"
+              type="text"
               value={state.input.userID}
               onChange={handleChange}
               placeholder="Enter User ID"
@@ -163,7 +163,7 @@ const LoginForm = () => {
             >
               <option value="">Select Role</option>
               <option value="Admin">Admin</option>
-              <option value="Supervisor">Supervisor</option>
+              <option value="Teacher">Teacher</option>
               <option value="Student">Student</option>
             </Form.Select>
             {state.errors.loginAs && (

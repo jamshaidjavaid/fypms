@@ -1,25 +1,74 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { useSelector } from "react-redux";
 import { Form, ListGroup } from "react-bootstrap";
 
+import { ApiCall } from "../../../api/apiCall";
+
 import CustomCard from "../../../Components/UI/CustomCard";
+import SpinnerModal from "../../../Components/UI/SpinnerModal";
 import Button from "../../../Components/UI/Button";
 
 import classes from "./PersonalNotes.module.css";
 
-const PersonalNotes = (props) => {
+const PersonalNotes = () => {
+  const { input } = useSelector((state) => state.login);
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
-  const handleSubmit = (event) => {
+  const loadPage = useCallback(async () => {
+    const response = await ApiCall({
+      params: {
+        role: input.loginAs,
+      },
+      route: `admin/personal-notes`,
+      verb: "get",
+      token: "jwt_token",
+      baseurl: true,
+    });
+
+    if (response && response.status === 200) {
+      setNotes(response.response.notes);
+      setIsLoading(false);
+    } else {
+      console.log(response);
+      setIsLoading(false);
+    }
+  }, [input.loginAs]);
+
+  useEffect(() => {
+    loadPage();
+  }, [loadPage]);
+
+  // console.log(notes);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setNotes([...notes, newNote]);
+    const response = await ApiCall({
+      params: {
+        role: input.loginAs,
+        note: newNote,
+      },
+      route: `admin/personal-notes/new-note`,
+      verb: "post",
+      token: "jwt_token",
+      baseurl: true,
+    });
+    setIsLoading(true);
+    loadPage();
     setNewNote("");
   };
 
-  const handleDelete = (index) => {
-    const newNotes = [...notes];
-    newNotes.splice(index, 1);
-    setNotes(newNotes);
+  const handleDelete = async (id) => {
+    const response = await ApiCall({
+      params: {},
+      route: `admin/personal-notes/${id}/delete?role=${input.loginAs}`,
+      verb: "delete",
+      token: "jwt_token",
+      baseurl: true,
+    });
+    loadPage();
+    setIsLoading(true);
   };
 
   return (
@@ -39,16 +88,24 @@ const PersonalNotes = (props) => {
             </Form.Group>
             <Button type="submit">Add</Button>
           </Form>
-          <ListGroup className="my-3">
-            {notes.map((note, index) => (
-              <ListGroup.Item key={index}>
-                <div className={classes.item}>
-                  <p className={classes.description}>{note}</p>
-                  <Button onClick={() => handleDelete(index)}>Delete</Button>
-                </div>
-              </ListGroup.Item>
-            ))}
-          </ListGroup>
+          {!isLoading &&
+            !notes.length > 0 &&
+            "You don't have personal notes, maybe create one!"}
+          {isLoading && <SpinnerModal />}
+          {!isLoading && notes.length > 0 && (
+            <ListGroup className="my-3">
+              {notes.map((note) => (
+                <ListGroup.Item key={note.id}>
+                  <div className={classes.item}>
+                    <p className={classes.description}>{note.note}</p>
+                    <Button onClick={() => handleDelete(note.id)}>
+                      Delete
+                    </Button>
+                  </div>
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          )}
         </div>
       </CustomCard>
     </div>

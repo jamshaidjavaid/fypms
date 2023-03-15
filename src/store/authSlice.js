@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const userID = localStorage.getItem("email") || "";
+const userID = localStorage.getItem("userID") || "";
 const password = localStorage.getItem("password") || "";
 const loginAs = localStorage.getItem("loginAs") || "";
 

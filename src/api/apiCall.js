@@ -16,8 +16,14 @@ export const ApiCall = async ({ params, route, verb, token, baseurl }) => {
     let response = null;
     switch (verb) {
       case "get":
+        const queryString = Object.keys(params)
+          .map(
+            (key) =>
+              encodeURIComponent(key) + "=" + encodeURIComponent(params[key])
+          )
+          .join("&");
         response = await axios.get(
-          url,
+          `${url}?${queryString}`,
           token ? { headers: { "x-access-token": token } } : null
         );
         break;
