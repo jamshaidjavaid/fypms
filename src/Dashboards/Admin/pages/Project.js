@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import { ApiCall } from "../../../api/apiCall";
@@ -13,6 +13,8 @@ const Project = () => {
   const [pageState, setPageState] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const { projectId } = useParams();
+  const navigate = useNavigate();
+
   let members;
 
   useEffect(() => {
@@ -46,6 +48,36 @@ const Project = () => {
       );
     });
   }
+
+  const projectDeleteHandler = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this project?")) {
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const response = await ApiCall({
+        params: { id },
+        route: `admin/projects/${id}/delete`,
+        verb: "delete",
+        token: "jwt_token",
+        baseurl: true,
+      });
+
+      if (response && response.status === 200) {
+        setPageState(response.response);
+        setIsLoading(false);
+        navigate(-1);
+        console.log(response);
+      } else {
+        console.log(response);
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Failed to delete project.");
+    }
+  };
   return (
     <div>
       {!isLoading && (
@@ -76,8 +108,14 @@ const Project = () => {
                 <span>{pageState.project.description}</span>
               </div>
               <div className={`${classes.item} ${classes.buttons}`}>
-                <Button>Delete Project</Button>
-                <Button>Edit Project</Button>
+                <Button
+                  onClick={() => projectDeleteHandler(pageState.project.id)}
+                >
+                  Delete Project
+                </Button>
+                <Link to={"./edit"}>
+                  <Button>Edit Project</Button>
+                </Link>
               </div>
             </div>
           </CustomCard>

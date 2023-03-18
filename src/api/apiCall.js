@@ -73,7 +73,7 @@ export const ApiCall = async ({ params, route, verb, token, baseurl }) => {
     }
 
     if (response) {
-      return await { status: 200, response: response.data };
+      return { status: 200, response: response.data };
     } else {
       return response;
     }

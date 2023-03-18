@@ -4,6 +4,7 @@ import { ApiCall } from "../../../api/apiCall";
 
 import NoticeBoardComponent from "../../../Components/NoticeBoards/NoticeBoardComponent";
 import NotificationsComponent from "../../../Components/Notifications/NotificationsComponent";
+import SpinnerModal from "../../../Components/UI/SpinnerModal";
 import CustomCard from "../../../Components/UI/CustomCard";
 import classes from "./../AdminDashboard.module.css";
 
@@ -73,6 +74,7 @@ export const Dashboard = () => {
           </div>
         </div>
       )}
+      {isLoading && <SpinnerModal />}
     </div>
   );
 };

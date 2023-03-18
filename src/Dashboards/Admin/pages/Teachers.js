@@ -10,7 +10,7 @@ import SpinnerModal from "../../../Components/UI/SpinnerModal";
 import classes from "./Teachers.module.css";
 
 const Teachers = () => {
-  const [pageState, setPageState] = useState({});
+  const [teachers, setTeachers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -25,7 +25,7 @@ const Teachers = () => {
       });
 
       if (response && response.status === 200) {
-        setPageState(response.response);
+        setTeachers(response.response.teachers);
         setIsLoading(false);
       } else {
         console.log(response);
@@ -47,7 +47,7 @@ const Teachers = () => {
   let teachersProfiles;
 
   if (!isLoading) {
-    const filteredTeachers = pageState.teachers.filter(
+    const filteredTeachers = teachers.filter(
       (teacher) =>
         teacher.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         teacher.empId.toLowerCase().includes(searchQuery.toLowerCase())

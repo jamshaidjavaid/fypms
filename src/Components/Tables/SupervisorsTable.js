@@ -1,13 +1,19 @@
-import { Table } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Table, Modal } from "react-bootstrap";
+import { MultiSelect } from "react-multi-select-component";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 
+import { ApiCall } from "../../api/apiCall";
 import Button from "../UI/Button";
 import classes from "./SupervisorsTable.module.css";
 
 const SupervisorsTable = (props) => {
   const [limit, setLimit] = useState(3);
+  const [showModal, setShowModal] = useState(false);
+  const [selected, setSelected] = useState([]);
+  const [teachers, setTeachers] = useState([]);
 
+  const { classId } = useParams();
   const loadMoreHandler = () => {
     setLimit((prevlimit) => prevlimit + 3);
   };
@@ -25,13 +31,69 @@ const SupervisorsTable = (props) => {
       );
     });
 
+  const handleAddSupervisor = () => {
+    const loadTeachers = async () => {
+      try {
+        const response = await ApiCall({
+          params: { classId },
+          route: "admin/forms/add-supervisor/data",
+          verb: "get",
+          token: "jwt_token",
+          baseurl: true,
+        });
+
+        const teachers = response.response.teachers;
+        const teacherOptions = teachers.map((teacher) => ({
+          value: teacher.id,
+          label: teacher.name,
+        }));
+        setTeachers(teacherOptions);
+        const supervisors = response.response.supervisors;
+        const supervisorsSelected = supervisors.map((teacher) => ({
+          value: teacher.id,
+          label: teacher.name,
+        }));
+        setSelected(supervisorsSelected);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    loadTeachers();
+    setShowModal(true);
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+  };
+
+  const handleModalSubmit = async () => {
+    const members = selected.map((supervisor) => ({
+      id: supervisor.value,
+      name: supervisor.label,
+    }));
+
+    try {
+      const response = await ApiCall({
+        params: {
+          supervisors: members,
+        },
+        route: `admin/classes/${classId}/assign-supervisor`,
+        verb: "patch",
+        token: "jwt_token",
+        baseurl: true,
+      });
+      console.log(response.response);
+    } catch (error) {
+      console.log(error);
+    }
+    setShowModal(false);
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.head}>
         <p className={classes.name}>Supervisors</p>
-        <Link to={"/assign-supervisor"}>
-          <Button>Add Supervisor</Button>
-        </Link>
+        <Button onClick={handleAddSupervisor}>Add Supervisor</Button>
       </div>
       {props.supervisors.length > 0 && (
         <Table responsive hover className={classes.table}>
@@ -54,6 +116,31 @@ const SupervisorsTable = (props) => {
           Load More
         </p>
       )}
+
+      <Modal show={showModal} onHide={handleModalClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Supervisor</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="mb-3">
+            <MultiSelect
+              name="memberNames"
+              options={teachers}
+              value={selected}
+              onChange={setSelected}
+              // hasSelectAll={("hasSelectAll", false)}
+            />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleModalClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleModalSubmit}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
