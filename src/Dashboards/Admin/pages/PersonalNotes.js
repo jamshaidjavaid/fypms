@@ -57,6 +57,7 @@ const PersonalNotes = () => {
     setIsLoading(true);
     loadPage();
     setNewNote("");
+    console.log(response);
   };
 
   const handleDelete = async (id) => {
@@ -69,6 +70,7 @@ const PersonalNotes = () => {
     });
     loadPage();
     setIsLoading(true);
+    console.log(response);
   };
 
   return (

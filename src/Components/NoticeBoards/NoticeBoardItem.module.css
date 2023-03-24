@@ -3,6 +3,8 @@
   align-items: flex-start;
   gap: 10px;
   padding: 0rem 1rem;
+  width: 100%;
+  min-width: 22rem;
 }
 
 .text {

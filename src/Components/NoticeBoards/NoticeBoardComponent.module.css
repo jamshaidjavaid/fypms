@@ -30,3 +30,16 @@
 .notice-container button {
   width: 100%;
 }
+
+.form {
+  display: grid;
+  grid-template-columns: auto;
+  column-gap: 50px;
+  row-gap: 20px;
+  align-items: flex-start;
+}
+
+.form label {
+  color: #6759d1;
+  margin-bottom: 5px;
+}

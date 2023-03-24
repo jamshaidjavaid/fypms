@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Modal, Button } from "react-bootstrap";
+import { toast } from "react-toastify";
+
 import { ApiCall } from "../../../api/apiCall";
 import Class from "../../../Components/Classes/Class";
 import SpinnerModal from "../../../Components/UI/SpinnerModal";
@@ -46,6 +48,12 @@ const Classes = () => {
         setClassesList((prevClassesList) =>
           prevClassesList.filter((cls) => cls.id !== classIdToDelete)
         );
+
+        if (response.status === 200) {
+          toast.success(`${response.response.message}`);
+        } else {
+          toast.error(`${response.response.message}`);
+        }
         console.log(response);
       } else {
         console.log(response);
@@ -94,7 +102,12 @@ const Classes = () => {
             </Link>
           </div>
           {classesLinks}
-          <Modal centered show={showModal} onHide={handleCloseModal}>
+          <Modal
+            backdrop="static"
+            centered
+            show={showModal}
+            onHide={handleCloseModal}
+          >
             <Modal.Header closeButton>
               <Modal.Title>Delete Class</Modal.Title>
             </Modal.Header>

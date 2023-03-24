@@ -2,12 +2,14 @@ import { Table, Modal } from "react-bootstrap";
 import { MultiSelect } from "react-multi-select-component";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { ApiCall } from "../../api/apiCall";
 import Button from "../UI/Button";
 import classes from "./SupervisorsTable.module.css";
 
 const SupervisorsTable = (props) => {
+  const [supervisors, setSupervisors] = useState(props.supervisors);
   const [limit, setLimit] = useState(3);
   const [showModal, setShowModal] = useState(false);
   const [selected, setSelected] = useState([]);
@@ -18,18 +20,16 @@ const SupervisorsTable = (props) => {
     setLimit((prevlimit) => prevlimit + 3);
   };
 
-  const tableBody = props.supervisors
-    .slice(0, limit)
-    .map((supervisor, index) => {
-      return (
-        <tr key={index}>
-          <td>{supervisor.name}</td>
-          <td className={classes.center}>{supervisor.empId}</td>
-          <td className={classes.center}>{supervisor.assignedProjectsCount}</td>
-          <td className={classes.center}>{supervisor.projectsLimit}</td>
-        </tr>
-      );
-    });
+  const tableBody = supervisors.slice(0, limit).map((supervisor, index) => {
+    return (
+      <tr key={index}>
+        <td>{supervisor.name}</td>
+        <td className={classes.center}>{supervisor.empId}</td>
+        <td className={classes.center}>{supervisor.assignedProjectsCount}</td>
+        <td className={classes.center}>{supervisor.projectsLimit}</td>
+      </tr>
+    );
+  });
 
   const handleAddSupervisor = () => {
     const loadTeachers = async () => {
@@ -48,12 +48,12 @@ const SupervisorsTable = (props) => {
           label: teacher.name,
         }));
         setTeachers(teacherOptions);
-        const supervisors = response.response.supervisors;
-        const supervisorsSelected = supervisors.map((teacher) => ({
-          value: teacher.id,
-          label: teacher.name,
-        }));
-        setSelected(supervisorsSelected);
+        // const supervisors = response.response.supervisors;
+        // const supervisorsSelected = supervisors.map((teacher) => ({
+        //   value: teacher.id,
+        //   label: teacher.name,
+        // }));
+        // setSelected(supervisorsSelected);
       } catch (error) {
         console.log(error);
       }
@@ -83,6 +83,16 @@ const SupervisorsTable = (props) => {
         baseurl: true,
       });
       console.log(response.response);
+
+      if (response.status === 200) {
+        toast.success(`${response.response.message}`);
+      } else {
+        toast.error(`${response.response.message}`);
+      }
+
+      setSelected([]);
+      const updatedSupervisors = response.response.updatedSupervisors;
+      setSupervisors(updatedSupervisors);
     } catch (error) {
       console.log(error);
     }
@@ -117,7 +127,7 @@ const SupervisorsTable = (props) => {
         </p>
       )}
 
-      <Modal show={showModal} onHide={handleModalClose}>
+      <Modal backdrop="static" show={showModal} onHide={handleModalClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add Supervisor</Modal.Title>
         </Modal.Header>
@@ -128,6 +138,9 @@ const SupervisorsTable = (props) => {
               options={teachers}
               value={selected}
               onChange={setSelected}
+              overrideStrings={{
+                noOptions: "No options or all teachers are assigned already",
+              }}
               // hasSelectAll={("hasSelectAll", false)}
             />
           </div>

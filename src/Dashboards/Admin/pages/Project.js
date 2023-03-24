@@ -1,5 +1,6 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 import { ApiCall } from "../../../api/apiCall";
 
@@ -72,6 +73,12 @@ const Project = () => {
       } else {
         console.log(response);
         setIsLoading(false);
+      }
+
+      if (response.status === 200) {
+        toast.success(`${response.response.message}`);
+      } else {
+        toast.error(`${response.response.message}`);
       }
     } catch (error) {
       console.error(error);

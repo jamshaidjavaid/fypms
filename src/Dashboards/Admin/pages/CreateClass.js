@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 import { ApiCall } from "../../../api/apiCall";
 
@@ -90,6 +91,8 @@ const CreateClass = () => {
           error = "Max allowed is required";
         } else if (value < 1 || value > 10) {
           error = "Max allowed must be between 1 and 10";
+        } else if (value < formData.minAllowed) {
+          error = "Max shouldn't be smaller than min";
         }
         break;
       default:
@@ -139,6 +142,12 @@ const CreateClass = () => {
           token: "jwt_token",
           baseurl: true,
         });
+
+        if (response.status === 200) {
+          toast.success(`${response.response.message}`);
+        } else {
+          toast.error(`${response.response.message}`);
+        }
         console.log(response);
       };
       sendData();

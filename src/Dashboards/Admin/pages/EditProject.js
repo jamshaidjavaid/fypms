@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { MultiSelect } from "react-multi-select-component";
 import { Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { ApiCall } from "../../../api/apiCall";
 import SpinnerModal from "../../../Components/UI/SpinnerModal";
@@ -171,6 +172,13 @@ const EditProject = () => {
           baseurl: true,
         });
         setIsLoading(false);
+
+        if (response.status === 200) {
+          toast.success(`${response.response.message}`);
+        } else {
+          toast.error(`${response.response.message}`);
+        }
+
         console.log(response.response);
       } catch (error) {
         console.log(error);

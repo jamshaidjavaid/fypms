@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { Form, Modal } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 import { ApiCall } from "../../../api/apiCall";
 
@@ -14,10 +16,71 @@ import Button from "../../../Components/UI/Button";
 
 import classes from "./Class.module.css";
 
+const initialState = {
+  titleSubmission: "",
+  proposalSubmission: "",
+  proposalDefense: "",
+  deliverable1: "",
+  deliverable1Evalutaion: "",
+  deliverable2: "",
+  deliverable2Evalutaion: "",
+};
+
 const Class = () => {
   const [pageState, setPageState] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+
   const { classId } = useParams();
+
+  const [showModal, setShowModal] = useState(false);
+  const [formState, setFormState] = useState({ ...initialState });
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
+
+  const handleCloseModal = () => setShowModal(false);
+  const handleShowModal = () => {
+    setFormState({ ...timetable });
+    setShowModal(true);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log(formState);
+    handleCloseModal();
+
+    try {
+      const response = await ApiCall({
+        params: { ...formState },
+        route: `admin/classes/${classId}/edit-timetable`,
+        verb: "patch",
+        token: "jwt_token",
+        baseurl: true,
+      });
+      if (response.status === 200) {
+        toast.success(`${response.response.message}`);
+        pageState.myClass = {
+          ...pageState.myClass,
+          timetable: { ...formState },
+        };
+      } else {
+        toast.error(`${response.response.message}`);
+      }
+      console.log(response);
+      setFormState({ ...initialState });
+    } catch (error) {
+      toast.error(`${error}`);
+      console.log(error);
+    }
+  };
+
+  const isFormValid =
+    Object.values(formState).filter((val) => val === "").length === 0;
 
   let timetable;
   useEffect(() => {
@@ -43,10 +106,14 @@ const Class = () => {
 
   if (!isLoading) {
     timetable = pageState.myClass.timetable;
+    // const formatDate = (timestamp) => {
+    //   const options = { month: "short", day: "numeric", year: "numeric" };
+    //   const date = new Date(timestamp);
+    //   return date.toLocaleDateString("en-US", options);
+    // };
     const formatDate = (timestamp) => {
-      const options = { month: "short", day: "numeric", year: "numeric" };
       const date = new Date(timestamp);
-      return date.toLocaleDateString("en-US", options);
+      return date.toISOString().slice(0, 10);
     };
 
     for (const key in timetable) {
@@ -128,11 +195,9 @@ const Class = () => {
                   <p>Deliverable 2 Evaluation:</p>
                   <h6>{timetable.deliverable2Evalutaion}</h6>
                 </div>
-                <Link to={`./edit-timetable`}>
-                  <Button>
-                    <p className={classes.edit}>Edit</p>
-                  </Button>
-                </Link>
+                <Button onClick={handleShowModal}>
+                  <p className={classes.edit}>Edit</p>
+                </Button>
               </div>
             </CustomCard>
             <NoticeBoardComponent
@@ -140,6 +205,88 @@ const Class = () => {
               notices={pageState.notices}
             />
           </div>
+          <Modal backdrop="static" show={showModal} onHide={handleCloseModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Timetable</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form onSubmit={handleSubmit} className={classes.form}>
+                <Form.Group>
+                  <Form.Label>Title Submission</Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="titleSubmission"
+                    value={formState.titleSubmission}
+                    onChange={handleInputChange}
+                  />
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label>Proposal Submission</Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="proposalSubmission"
+                    value={formState.proposalSubmission}
+                    onChange={handleInputChange}
+                  />
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label>Proposal Defense</Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="proposalDefense"
+                    value={formState.proposalDefense}
+                    onChange={handleInputChange}
+                  />
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label>Deliverable 1</Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="deliverable1"
+                    value={formState.deliverable1}
+                    onChange={handleInputChange}
+                  />
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label>Deliverable 1 Evaluation</Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="deliverable1Evalutaion"
+                    value={formState.deliverable1Evalutaion}
+                    onChange={handleInputChange}
+                  />
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label>Deliverable 2</Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="deliverable2"
+                    value={formState.deliverable2}
+                    onChange={handleInputChange}
+                  />
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label>Deliverable 2 Evaluation</Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="deliverable2Evalutaion"
+                    value={formState.deliverable2Evalutaion}
+                    onChange={handleInputChange}
+                  />
+                </Form.Group>
+
+                <Button variant="primary" type="submit" disabled={!isFormValid}>
+                  Save Changes
+                </Button>
+              </Form>
+            </Modal.Body>
+          </Modal>
         </div>
       )}
       {isLoading && <SpinnerModal />}

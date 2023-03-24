@@ -10,6 +10,12 @@
   width: 20rem;
 }
 
+.formgroup input,
+.formgroup select {
+  border-radius: 0px;
+  /* border: none; */
+}
+
 .control {
   height: 3rem;
   width: 20rem;

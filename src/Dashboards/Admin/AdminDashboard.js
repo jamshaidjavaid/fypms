@@ -15,7 +15,6 @@ import CreateProject from "./pages/CreateProject";
 import Project from "./pages/Project";
 import EditProject from "./pages/EditProject";
 import Sidebar from "../../Components/Navbar/Sidebar";
-import EditTimeTable from "../../Components/Forms/EditTimeTable";
 
 const AdminDashboard = (props) => {
   return (
@@ -25,10 +24,6 @@ const AdminDashboard = (props) => {
         <Route path="/classes/" element={<Classes />} />
         <Route path="/classes/new-class" element={<CreateClass />} />
         <Route path="/classes/:classId" element={<Class />} />
-        <Route
-          path="/classes/:classId/edit-timetable"
-          element={<EditTimeTable />}
-        />
         <Route path="/teachers/" element={<Teachers />} />
         <Route path="/teachers/:teacherId" element={<Teacher />} />
         <Route path="/projects/" element={<Projects />} />
@@ -39,6 +34,7 @@ const AdminDashboard = (props) => {
         <Route path="/generate-list" element={<GenerateLists />} />
         <Route path="/personal-notes" element={<PersonalNotes />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="*" element={<h1>Page Not Found!</h1>} />
       </Routes>
     </Sidebar>
   );

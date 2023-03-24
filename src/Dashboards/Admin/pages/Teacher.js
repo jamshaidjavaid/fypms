@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { MdOutlineDeleteForever } from "react-icons/md";
+import { toast } from "react-toastify";
 
 import { ApiCall } from "../../../api/apiCall";
 
@@ -39,9 +40,49 @@ const Teacher = () => {
     loadPage();
   }, [teacherId]);
 
-  const deleteUnderSupervisionHandler = (id) => {};
+  // console.log(pageState);
 
-  const deleteUnderExaminationHandler = (id) => {};
+  const deleteUnderSupervisionHandler = async (id) => {
+    try {
+      const response = await ApiCall({
+        params: { classId: id },
+        route: `admin/teachers/${pageState.teacher.id}/unassign-supervisor`,
+        verb: "patch",
+        token: "jwt_token",
+        baseurl: true,
+      });
+      if (response.status === 200) {
+        toast.success(`${response.response.message}`);
+      } else {
+        toast.error(`${response.response.message}`);
+      }
+      console.log(response);
+    } catch (error) {
+      toast.error(`${error}`);
+      console.log(error);
+    }
+  };
+
+  const deleteUnderExaminationHandler = async (id) => {
+    try {
+      const response = await ApiCall({
+        params: { classId: id },
+        route: `admin/teachers/${pageState.teacher.id}/unassign-examiner`,
+        verb: "patch",
+        token: "jwt_token",
+        baseurl: true,
+      });
+      if (response.status === 200) {
+        toast.success(`${response.response.message}`);
+      } else {
+        toast.error(`${response.response.message}`);
+      }
+      console.log(response);
+    } catch (error) {
+      toast.error(`${error}`);
+      console.log(error);
+    }
+  };
 
   return (
     <div>

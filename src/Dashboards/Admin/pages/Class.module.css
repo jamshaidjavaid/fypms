@@ -78,3 +78,20 @@
   /* justify-content: center; */
   /* justify-items: center; */
 }
+
+.form {
+  display: grid;
+  grid-template-columns: 200px 200px;
+  column-gap: 30px;
+  row-gap: 20px;
+}
+
+.form button {
+  margin-top: 30px;
+  max-height: 40px;
+}
+
+.form label {
+  margin: 3px;
+  color: #6759d1;
+}

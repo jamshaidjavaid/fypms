@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { ADMIN_ROUTES, STUDENT_ROUTES, SUPERVISOR_ROUTES } from "./Routes";
 import Login from "./pages/Login";
 import Page404 from "./pages/Page404";
@@ -85,6 +88,20 @@ function App() {
         <Route path="/404" element={<Page404 />} />
         <Route path="*" element={<h1>Page Not Found!</h1>} />
       </Routes>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      {/* Same as */}
+      <ToastContainer />
     </div>
   );
 }
