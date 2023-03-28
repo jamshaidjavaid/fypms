@@ -31,7 +31,7 @@ const Sidebar = (props) => {
         </div>
 
         <main>
-          <Topbar />
+          <Topbar user={props.user} />
           <div style={{ paddingLeft: "20px" }}>{props.children}</div>
         </main>
       </div>

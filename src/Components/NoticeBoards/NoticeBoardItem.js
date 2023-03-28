@@ -3,6 +3,7 @@ import { MdOutlineDeleteForever } from "react-icons/md";
 import classes from "./NoticeBoardItem.module.css";
 
 const NoticeBoardItem = (props) => {
+  const isAdmin = props.isAdmin;
   const entity = props.item.receiverEntity === "class" ? "Class" : "Teacher";
 
   const deleteNoticeHandler = (id) => {
@@ -21,10 +22,12 @@ const NoticeBoardItem = (props) => {
         )}
         <hr />
       </div>
-      <MdOutlineDeleteForever
-        className={classes.icon}
-        onClick={() => deleteNoticeHandler(props.item.id)}
-      />
+      {isAdmin && (
+        <MdOutlineDeleteForever
+          className={classes.icon}
+          onClick={() => deleteNoticeHandler(props.item.id)}
+        />
+      )}
     </div>
   );
 };

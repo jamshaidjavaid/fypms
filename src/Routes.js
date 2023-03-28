@@ -1,6 +1,6 @@
 import {
   MdDashboard,
-  MdOutlineManageSearch,
+  // MdOutlineManageSearch,
   // MdApps,
   MdOutlineSettingsSuggest,
   MdOutlineVoiceChat,
@@ -9,7 +9,7 @@ import {
 import { SiGoogleclassroom } from "react-icons/si";
 import { AiOutlineSchedule } from "react-icons/ai";
 import { ImUpload2 } from "react-icons/im";
-import { HiUserAdd } from "react-icons/hi";
+// import { HiUserAdd } from "react-icons/hi";
 import { TbNotebook } from "react-icons/tb";
 import { BsPersonSquare } from "react-icons/bs";
 import { GiSpaceShuttle } from "react-icons/gi";
@@ -40,11 +40,11 @@ export const ADMIN_ROUTES = [
     name: "Notice Board",
     icon: <MdOutlineEventNote />,
   },
-  {
-    path: "/generate-list",
-    name: "Generate List",
-    icon: <MdOutlineManageSearch />,
-  },
+  // {
+  //   path: "/generate-list",
+  //   name: "Generate List",
+  //   icon: <MdOutlineManageSearch />,
+  // },
   {
     path: "/personal-notes",
     name: "Personal Notes",
@@ -106,11 +106,11 @@ export const STUDENT_ROUTES = [
     name: "Submissions",
     icon: <ImUpload2 />,
   },
-  {
-    path: "/invitations",
-    name: "Invitations/Requests",
-    icon: <HiUserAdd />,
-  },
+  // {
+  //   path: "/invitations",
+  //   name: "Invitations/Requests",
+  //   icon: <HiUserAdd />,
+  // },
   {
     path: "/chat-meetings",
     name: "Chat & Meetings",

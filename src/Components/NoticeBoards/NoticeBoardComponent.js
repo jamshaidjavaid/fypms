@@ -19,6 +19,7 @@ const initialState = {
 };
 
 const NoticeBoardComponent = (props) => {
+  const isAdmin = props.isAdmin;
   const [limit, setLimit] = useState(6);
   const [notices, setNotices] = useState(props.notices);
   const [loadedData, setLoadedData] = useState([]);
@@ -198,6 +199,7 @@ const NoticeBoardComponent = (props) => {
         reciever={props.reciever}
         key={item.id}
         item={item}
+        isAdmin={isAdmin}
       />
     );
   });
@@ -207,7 +209,7 @@ const NoticeBoardComponent = (props) => {
       <CustomCard>
         <div className={`${classes["notice-container"]} ${customclass}`}>
           <p className={classes.head}>Notice Board</p>
-          <Button onClick={handleShowModal}>Add Notice</Button>
+          {isAdmin && <Button onClick={handleShowModal}>Add Notice</Button>}
           {notices.length > 0 && noticeItems}
           {!notices.length && <p>No notices to show here!</p>}
           {limit < notices.length && (

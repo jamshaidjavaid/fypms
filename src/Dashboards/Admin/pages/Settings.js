@@ -40,6 +40,7 @@ const Settings = (props) => {
     finalpasswords = passwords;
     setPasswords(initialPasswordsState);
   };
+  console.log(finalpasswords);
 
   return (
     <div className={classes["main-container"]}>

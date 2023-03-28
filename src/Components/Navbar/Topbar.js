@@ -5,11 +5,9 @@ import { authActions } from "../../store/authSlice";
 import Button from "../UI/Button";
 import classes from "./Topbar.module.css";
 
-const Topbar = () => {
+const Topbar = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const name = "Jamshaid Javaid";
 
   const logoutHandler = () => {
     dispatch(authActions.logout());
@@ -27,7 +25,7 @@ const Topbar = () => {
             paddingLeft: "5px",
           }}
         >
-          {name}
+          {props.user.name}
         </span>
       </p>
       <div className={classes.group}>

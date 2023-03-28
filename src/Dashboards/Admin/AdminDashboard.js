@@ -16,9 +16,13 @@ import Project from "./pages/Project";
 import EditProject from "./pages/EditProject";
 import Sidebar from "../../Components/Navbar/Sidebar";
 
+const user = {
+  name: "Fazal Akram",
+};
+
 const AdminDashboard = (props) => {
   return (
-    <Sidebar links={props.links}>
+    <Sidebar user={user} links={props.links}>
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/classes/" element={<Classes />} />

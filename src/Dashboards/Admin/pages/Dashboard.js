@@ -70,7 +70,11 @@ export const Dashboard = () => {
             </div>
           </div>
           <div>
-            <NoticeBoardComponent reciever={true} notices={pageState.notices} />
+            <NoticeBoardComponent
+              isAdmin={true}
+              reciever={true}
+              notices={pageState.notices}
+            />
           </div>
         </div>
       )}

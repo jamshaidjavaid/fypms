@@ -38,6 +38,7 @@ const NoticeBoard = () => {
             reciever={true}
             notices={pageState.notices}
             wide={true}
+            isAdmin={true}
           />
         </div>
       )}

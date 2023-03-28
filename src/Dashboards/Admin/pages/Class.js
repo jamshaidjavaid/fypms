@@ -203,6 +203,7 @@ const Class = () => {
             <NoticeBoardComponent
               reciever={false}
               notices={pageState.notices}
+              isAdmin={true}
             />
           </div>
           <Modal backdrop="static" show={showModal} onHide={handleCloseModal}>

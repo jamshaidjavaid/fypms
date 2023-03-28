@@ -165,7 +165,11 @@ const Teacher = () => {
               columnName={"Class"}
             />
           </div>
-          <NoticeBoardComponent reciever={false} notices={pageState.notices} />
+          <NoticeBoardComponent
+            isAdmin={true}
+            reciever={false}
+            notices={pageState.notices}
+          />
         </div>
       )}
       {isLoading && <SpinnerModal />}
