@@ -205,6 +205,9 @@ const CreateProject = () => {
           toast.error(`${response.response.message}`);
         }
         console.log(response.response);
+        setTimeout(() => {
+          navigate(-1);
+        }, 3000);
       } catch (error) {
         console.log(error);
         setIsLoading(false);
@@ -215,9 +218,6 @@ const CreateProject = () => {
       }));
     };
     sendFormData();
-    setTimeout(() => {
-      navigate(-1);
-    }, 3000);
   };
 
   return (

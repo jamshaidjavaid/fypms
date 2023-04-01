@@ -1,100 +1,77 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, Fragment } from "react";
+import { Card, Col, Row, Container } from "react-bootstrap";
 
-import { FaCheckCircle } from "react-icons/fa";
-import { Card, Col, Row } from "react-bootstrap";
+import { ApiCall } from "../../../api/apiCall";
+
+import SpinnerModal from "../../../Components/UI/SpinnerModal";
+import NoticeBoardComponent from "../../../Components/NoticeBoards/NoticeBoardComponent";
 import styles from "./ProjectManagementPage.module.css";
 
-import NoticeBoardComponent from "../../../Components/NoticeBoards/NoticeBoardComponent";
+const Dashboard = ({ userId }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [myTodoList, setMyTodoList] = useState([]);
+  const [notices, setNotices] = useState([]);
 
-const notices = [
-  {
-    _id: "641b70b243e0c5fd08209312",
-    headline: "Please see this notice",
-    description: "checking wether notices working properly  or not",
-    receiverEntity: "teacher",
-    receiverName: "Muhammad Umair",
-    receiverId: "6410ed70019edfc383d66433",
-    id: "641b70b243e0c5fd082093123",
-  },
-  {
-    _id: "641b70b243e0c5fd08209312",
-    headline: "Please see this notice",
-    description: "checking wether notices working properly  or not",
-    receiverEntity: "teacher",
-    receiverName: "Muhammad Umair",
-    receiverId: "6410ed70019edfc383d66433",
-    id: "641b70b243e0c5fd082093122",
-  },
-  {
-    _id: "641b70b243e0c5fd08209312",
-    headline: "Please see this notice",
-    description: "checking wether notices working properly  or not",
-    receiverEntity: "teacher",
-    receiverName: "Muhammad Umair",
-    receiverId: "6410ed70019edfc383d66433",
-    id: "641b70b243e0c5fd082093121",
-  },
-];
+  let totalTasks, tasksAssignedToMe, completedTasks, lateTasks, completedByMe;
+  useEffect(() => {
+    const loadPage = async () => {
+      const response = await ApiCall({
+        params: { studentId: userId },
+        route: `student/dashboard`,
+        verb: "get",
+        token: "jwt_token",
+        baseurl: true,
+      });
 
-const Dashboard = () => {
-  const [myTodoList, setMyTodoList] = useState([
-    {
-      title: "Implement Login Functionality",
-      phase: "Implementation",
-      deadline: "2023-04-30",
-      status: "In Progress",
-    },
-    {
-      title: "Create User Dashboard",
-      phase: "Design",
-      deadline: "2023-05-31",
-      status: "Didn't Start",
-    },
-    {
-      title: "Write API Documentation",
-      phase: "Testing",
-      deadline: "2023-06-30",
-      status: "Late",
-    },
-    {
-      title: "Write API Documentation",
-      phase: "Testing",
-      deadline: "2023-06-30",
-      status: "Late",
-    },
-  ]);
+      if (response && response.status === 200) {
+        setMyTodoList(response?.response?.myTodoList || []);
+        setNotices(response?.response?.notices || []);
+        setIsLoading(false);
+      } else {
+        console.log(response);
+        setIsLoading(false);
+      }
+    };
+    loadPage();
+  }, [userId]);
 
   return (
-    <div>
-      <Row className={`my-3 ${styles.row}`}>
-        <h4>My Todo List</h4>
-        {myTodoList.map((todo, index) => (
-          <Col key={index} className="mb-3">
-            <Card className={styles.card}>
-              <Card.Body>
-                <Card.Title className={styles.cardTitle}>
-                  {todo.title}
-                </Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">
-                  {todo.phase}
-                </Card.Subtitle>
-                <Card.Text className={styles.cardText}>
-                  <strong>Deadline:</strong> {todo.deadline}
-                  <br />
-                  <strong>Status:</strong> {todo.status}
-                </Card.Text>
-                <FaCheckCircle
-                  className={styles.deleteBtn}
-                  //   onClick={() => handleDeleteTask(todo)}
-                />
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-      <hr />
-      <NoticeBoardComponent isAdmin={false} notices={notices} />
-    </div>
+    <Fragment>
+      {!isLoading && (
+        <div className={styles.flexHorizontal}>
+          <Container>
+            <h4>My Todo List</h4>
+            <Row className="my-3">
+              {!myTodoList.length && (
+                <p>Hurray! You don't have any work left.</p>
+              )}
+              {myTodoList.map((todo) => (
+                <Col key={todo.id} lg={4} className="mb-3">
+                  <Card className={styles.card}>
+                    <Card.Body>
+                      <Card.Title className={styles.cardTitle}>
+                        {todo.title}
+                      </Card.Title>
+                      <Card.Subtitle className="mb-2 text-muted">
+                        {todo.phase}
+                      </Card.Subtitle>
+                      <Card.Text className={styles.cardText}>
+                        <strong>Deadline:</strong>{" "}
+                        {new Date(todo.deadline).toISOString().substring(0, 10)}
+                        <br />
+                        <strong>Status:</strong> {todo.status}
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </Container>
+          <NoticeBoardComponent isAdmin={false} notices={notices} />
+        </div>
+      )}
+      {isLoading && <SpinnerModal />}
+    </Fragment>
   );
 };
 

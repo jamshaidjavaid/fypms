@@ -4,6 +4,7 @@ import { Table, Button, Form } from "react-bootstrap";
 import styles from "./Submissions.module.css";
 
 const Submissions = () => {
+  const [file, setFile] = useState(null);
   const [submissions, setSubmissions] = useState([
     {
       id: 1,
@@ -26,7 +27,7 @@ const Submissions = () => {
       projectId: 1,
       deliverableType: "Deliverable 2",
       submissionFile: null,
-      submissionStatus: "Not submitted",
+      submissionStatus: "Rejected",
       submissionDate: null,
     },
   ]);
@@ -39,7 +40,9 @@ const Submissions = () => {
     );
     updatedSubmissions[submissionIndex].submissionStatus = "Submitted";
     updatedSubmissions[submissionIndex].submissionDate = new Date();
+    updatedSubmissions[submissionIndex].submissionFile = file;
     setSubmissions(updatedSubmissions);
+    setFile(null); // Reset the state variable for the next submission
   };
 
   const handleResubmit = (submissionId, event) => {
@@ -77,7 +80,11 @@ const Submissions = () => {
               {submission.submissionStatus === "Not submitted" && (
                 <Form className={styles.form}>
                   <div className="m-3">
-                    <input type="file" className={styles.input} />
+                    <input
+                      type="file"
+                      className={styles.input}
+                      onChange={(e) => setFile(e.target.files[0])}
+                    />
                   </div>
                   <Button
                     type="submit"

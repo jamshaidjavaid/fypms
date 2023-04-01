@@ -61,8 +61,14 @@ export const ApiCall = async ({ params, route, verb, token, baseurl }) => {
         );
         break;
       case "delete":
+        const queryStr = Object.keys(params)
+          .map(
+            (key) =>
+              encodeURIComponent(key) + "=" + encodeURIComponent(params[key])
+          )
+          .join("&");
         response = await axios.delete(
-          url,
+          `${url}?${queryStr}`,
           token ? { headers: { "x-access-token": token } } : null,
           params
         );

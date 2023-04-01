@@ -19,6 +19,7 @@ const NotificationsComponent = (props) => {
     <CustomCard>
       <div className={classes["notification-container"]}>
         <p className={classes.head}>Notifications</p>
+        {!notificationItems.length && <p>There are no notifications to show</p>}
         {notificationItems}
         {limit < props.notifications.length && (
           <p className={classes.load} onClick={loadMoreHandler}>

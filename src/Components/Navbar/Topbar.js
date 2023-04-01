@@ -1,17 +1,15 @@
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 import { authActions } from "../../store/authSlice";
 import Button from "../UI/Button";
 import classes from "./Topbar.module.css";
 
 const Topbar = (props) => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const logoutHandler = () => {
     dispatch(authActions.logout());
-    navigate("/login");
+    window.location.reload();
   };
 
   return (

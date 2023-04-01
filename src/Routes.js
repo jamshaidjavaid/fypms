@@ -3,7 +3,7 @@ import {
   // MdOutlineManageSearch,
   // MdApps,
   MdOutlineSettingsSuggest,
-  MdOutlineVoiceChat,
+  // MdOutlineVoiceChat,
   MdOutlineEventNote,
 } from "react-icons/md";
 import { SiGoogleclassroom } from "react-icons/si";
@@ -111,10 +111,15 @@ export const STUDENT_ROUTES = [
   //   name: "Invitations/Requests",
   //   icon: <HiUserAdd />,
   // },
+  // {
+  //   path: "/chat-meetings",
+  //   name: "Chat & Meetings",
+  //   icon: <MdOutlineVoiceChat />,
+  // },
   {
-    path: "/chat-meetings",
-    name: "Chat & Meetings",
-    icon: <MdOutlineVoiceChat />,
+    path: "/personal-notes",
+    name: "Personal Notes",
+    icon: <TbNotebook />,
   },
   {
     path: "/settings",

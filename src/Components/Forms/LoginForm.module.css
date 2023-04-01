@@ -50,3 +50,8 @@
   font-size: 0.8rem;
   font-weight: 300;
 }
+
+.taskForm {
+  display: grid;
+  gap: 0.5rem;
+}
