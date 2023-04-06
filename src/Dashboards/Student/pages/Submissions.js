@@ -27,7 +27,7 @@ const Submissions = () => {
       projectId: 1,
       deliverableType: "Deliverable 2",
       submissionFile: null,
-      submissionStatus: "Rejected",
+      submissionStatus: "Not submitted",
       submissionDate: null,
     },
   ]);

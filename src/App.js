@@ -5,42 +5,17 @@ import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { ADMIN_ROUTES, STUDENT_ROUTES, SUPERVISOR_ROUTES } from "./Routes";
+import { ADMIN_ROUTES, STUDENT_ROUTES, TEACHER_ROUTES } from "./Routes";
 import Login from "./pages/Login";
 import Page404 from "./pages/Page404";
 import AdminDashboard from "./Dashboards/Admin/AdminDashboard";
 import StudentDashboard from "./Dashboards/Student/StudentDashboard";
-import SupervisorDashboard from "./Dashboards/Supervisor/SupervisorDashboard";
+import TeacherDashboard from "./Dashboards/Teacher/TeacherDashboard";
 
 import "./App.css";
 
 function App() {
   const { input, auth } = useSelector((state) => state.login);
-
-  // useEffect(() => {}, [auth.uid, input]);
-
-  // const profile = {
-  //   userType: input.loginAs,
-  // };
-
-  // let links = [];
-  // if (profile.userType === "Admin") {
-  //   links = ADMIN_ROUTES;
-  // } else if (profile.userType === "Supervisor") {
-  //   links = SUPERVISOR_ROUTES;
-  // } else if (profile.userType === "Student") {
-  //   links = STUDENT_ROUTES;
-  // }
-
-  // let dashboard;
-
-  // if (auth && auth.uid && profile.userType === "Admin") {
-  //   dashboard = <AdminDashboard links={links} />;
-  // } else if (auth && auth.uid && profile.userType === "Supervisor") {
-  //   dashboard = <SupervisorDashboard links={links} />;
-  // } else if (auth && auth.uid && profile.userType === "Student") {
-  //   dashboard = <StudentDashboard links={links} />;
-  // }
 
   useEffect(() => {
     const profile = {
@@ -50,8 +25,8 @@ function App() {
     let links = [];
     if (profile.userType === "Admin") {
       links = ADMIN_ROUTES;
-    } else if (profile.userType === "Supervisor") {
-      links = SUPERVISOR_ROUTES;
+    } else if (profile.userType === "Teacher") {
+      links = TEACHER_ROUTES;
     } else if (profile.userType === "Student") {
       links = STUDENT_ROUTES;
     }
@@ -60,8 +35,8 @@ function App() {
 
     if (auth && auth.uid && profile.userType === "Admin") {
       dashboard = <AdminDashboard links={links} />;
-    } else if (auth && auth.uid && profile.userType === "Supervisor") {
-      dashboard = <SupervisorDashboard links={links} />;
+    } else if (auth && auth.uid && profile.userType === "Teacher") {
+      dashboard = <TeacherDashboard links={links} />;
     } else if (auth && auth.uid && profile.userType === "Student") {
       dashboard = <StudentDashboard links={links} />;
     }

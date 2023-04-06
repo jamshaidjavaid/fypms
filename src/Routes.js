@@ -5,6 +5,7 @@ import {
   MdOutlineSettingsSuggest,
   // MdOutlineVoiceChat,
   MdOutlineEventNote,
+  MdOutlineAssessment,
 } from "react-icons/md";
 import { SiGoogleclassroom } from "react-icons/si";
 import { AiOutlineSchedule } from "react-icons/ai";
@@ -62,27 +63,47 @@ export const ADMIN_ROUTES = [
   },
 ];
 
-export const SUPERVISOR_ROUTES = [
-  //   {
-  //     path: "/",
-  //     name: "Dashboard",
-  //     icon: <FaHome />,
-  //   },
-  //   {
-  //     path: "/users",
-  //     name: "Users",
-  //     icon: <FaUser />,
-  //   },
-  //   {
-  //     path: "/messages",
-  //     name: "Messages",
-  //     icon: <MdMessage />,
-  //   },
-  //   {
-  //     path: "/analytics",
-  //     name: "Analytics",
-  //     icon: <BiAnalyse />,
-  //   },
+export const TEACHER_ROUTES = [
+  {
+    path: "/",
+    name: "Dashboard",
+    icon: <MdDashboard />,
+  },
+  {
+    path: "/supervision-projects",
+    name: "Supervision Projects",
+    icon: <GiSpaceShuttle />,
+  },
+  {
+    path: "/examination-projects",
+    name: "Examination Projects",
+    icon: <MdOutlineAssessment />,
+  },
+  // {
+  //   path: "/invitations",
+  //   name: "Invitations/Requests",
+  //   icon: <HiUserAdd />,
+  // },
+  // {
+  //   path: "/chat-meetings",
+  //   name: "Chat & Meetings",
+  //   icon: <MdOutlineVoiceChat />,
+  // },
+  {
+    path: "/notifications",
+    name: "Notify PMO",
+    icon: <MdOutlineEventNote />,
+  },
+  {
+    path: "/personal-notes",
+    name: "Personal Notes",
+    icon: <TbNotebook />,
+  },
+  {
+    path: "/settings",
+    name: "Settings",
+    icon: <MdOutlineSettingsSuggest />,
+  },
 ];
 
 export const STUDENT_ROUTES = [
