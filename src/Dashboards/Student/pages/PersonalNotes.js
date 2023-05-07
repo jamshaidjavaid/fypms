@@ -20,7 +20,7 @@ const PersonalNotes = ({ userId }) => {
       params: {
         userId: userId,
       },
-      route: `teacher/personal-notes`,
+      route: `student/personal-notes`,
       verb: "get",
       token: "jwt_token",
       baseurl: true,
@@ -46,7 +46,7 @@ const PersonalNotes = ({ userId }) => {
         note: newNote,
         userId,
       },
-      route: `teacher/personal-notes/new-note`,
+      route: `student/personal-notes/new-note`,
       verb: "post",
       token: "jwt_token",
       baseurl: true,
@@ -68,7 +68,7 @@ const PersonalNotes = ({ userId }) => {
       params: {
         userId,
       },
-      route: `teacher/personal-notes/${id}/delete`,
+      route: `student/personal-notes/${id}/delete`,
       verb: "delete",
       token: "jwt_token",
       baseurl: true,

@@ -9,6 +9,7 @@ import SpinnerModal from "../../../Components/UI/SpinnerModal";
 import Button from "../../../Components/UI/Button";
 
 import classes from "./PersonalNotes.module.css";
+import { toast } from "react-toastify";
 
 const PersonalNotes = () => {
   const { input } = useSelector((state) => state.login);
@@ -55,19 +56,31 @@ const PersonalNotes = () => {
       baseurl: true,
     });
     setIsLoading(true);
+    if (response.status === 200) {
+      toast.success(response.response.message);
+    } else {
+      toast.error(response.response.message);
+    }
     loadPage();
     setNewNote("");
     console.log(response);
   };
 
   const handleDelete = async (id) => {
+    console.log(input.loginAs);
+
     const response = await ApiCall({
       params: {},
-      route: `admin/personal-notes/${id}/delete?role=${input.loginAs}`,
+      route: `admin/personal-notes/${id}/delete`,
       verb: "delete",
       token: "jwt_token",
       baseurl: true,
     });
+    if (response.status === 200) {
+      toast.success(response.response.message);
+    } else {
+      toast.error(response.response.message);
+    }
     loadPage();
     setIsLoading(true);
     console.log(response);
