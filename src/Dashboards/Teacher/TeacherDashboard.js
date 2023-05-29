@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import Dashboard from "./pages/Dashboard";
 
@@ -11,9 +12,10 @@ import Settings from "./pages/Settings";
 import Notifications from "./pages/Notifications";
 
 const TeacherDashboard = (props) => {
+  const { input } = useSelector((state) => state.login);
   const user = {
-    name: "Aftab Akram",
-    id: "6410ec4e019edfc383d66431",
+    name: input.userName,
+    id: input.user_id,
   };
 
   return (

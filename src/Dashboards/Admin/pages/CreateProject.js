@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { MultiSelect } from "react-multi-select-component";
+import { useSelector } from "react-redux";
 import { Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -20,6 +21,7 @@ const initialState = {
 };
 
 const CreateProject = () => {
+  const { token } = useSelector((state) => state.login.input);
   const [formData, setFormData] = useState({
     ...initialState,
   });
@@ -46,7 +48,7 @@ const CreateProject = () => {
           params: {},
           route: "admin/classes",
           verb: "get",
-          token: "jwt_token",
+          token,
           baseurl: true,
         });
         setClasses(response?.response?.classes ?? []);
@@ -55,7 +57,7 @@ const CreateProject = () => {
       }
     };
     loadClasses();
-  }, []);
+  }, [token]);
 
   // Fetch students and supervisors when class is chosen
   useEffect(() => {
@@ -70,7 +72,7 @@ const CreateProject = () => {
             params: { classId: formData.classId },
             route: `admin/forms/new-project/data`,
             verb: "get",
-            token: "jwt_token",
+            token,
             baseurl: true,
           });
           const myStudents = response?.response?.students ?? [];
@@ -87,7 +89,7 @@ const CreateProject = () => {
       };
       loadFormData();
     }
-  }, [formData.classId]);
+  }, [formData.classId, token]);
 
   const handleTitleChange = (event) => {
     setFormData((prevData) => ({ ...prevData, title: event.target.value }));
@@ -194,7 +196,7 @@ const CreateProject = () => {
           },
           route: `admin/projects/new-project`,
           verb: "post",
-          token: "jwt_token",
+          token,
           baseurl: true,
         });
         setIsLoading(false);

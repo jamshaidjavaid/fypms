@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { MdOutlineDeleteForever } from "react-icons/md";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 import { ApiCall } from "../../../api/apiCall";
 
@@ -14,6 +15,7 @@ import CustomCard from "../../../Components/UI/CustomCard";
 import classes from "./Teacher.module.css";
 
 const Teacher = () => {
+  const { token } = useSelector((state) => state.login.input);
   const [pageState, setPageState] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
@@ -25,7 +27,7 @@ const Teacher = () => {
         params: {},
         route: `admin/teachers/${teacherId}`,
         verb: "get",
-        token: "jwt_token",
+        token,
         baseurl: true,
       });
 
@@ -38,7 +40,7 @@ const Teacher = () => {
       }
     };
     loadPage();
-  }, [teacherId]);
+  }, [teacherId, token]);
 
   // console.log(pageState);
 
@@ -48,7 +50,7 @@ const Teacher = () => {
         params: { classId: id },
         route: `admin/teachers/${pageState.teacher.id}/unassign-supervisor`,
         verb: "patch",
-        token: "jwt_token",
+        token,
         baseurl: true,
       });
       if (response.status === 200) {
@@ -69,7 +71,7 @@ const Teacher = () => {
         params: { classId: id },
         route: `admin/teachers/${pageState.teacher.id}/unassign-examiner`,
         verb: "patch",
-        token: "jwt_token",
+        token,
         baseurl: true,
       });
       if (response.status === 200) {

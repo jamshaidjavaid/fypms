@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import { ApiCall } from "../../../api/apiCall";
 
@@ -7,6 +8,7 @@ import SpinnerModal from "../../../Components/UI/SpinnerModal";
 import classes from "./Projects.module.css";
 
 const Projects = () => {
+  const { token } = useSelector((state) => state.login.input);
   const [pageState, setPageState] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
@@ -16,7 +18,7 @@ const Projects = () => {
         params: {},
         route: `admin/projects`,
         verb: "get",
-        token: "jwt_token",
+        token,
         baseurl: true,
       });
 
@@ -29,7 +31,7 @@ const Projects = () => {
       }
     };
     loadPage();
-  }, []);
+  }, [token]);
 
   return (
     <div>

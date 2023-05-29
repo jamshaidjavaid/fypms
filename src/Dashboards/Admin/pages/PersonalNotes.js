@@ -24,7 +24,7 @@ const PersonalNotes = () => {
       },
       route: `admin/personal-notes`,
       verb: "get",
-      token: "jwt_token",
+      token: input.token,
       baseurl: true,
     });
 
@@ -35,7 +35,7 @@ const PersonalNotes = () => {
       console.log(response);
       setIsLoading(false);
     }
-  }, [input.loginAs]);
+  }, [input.loginAs, input.token]);
 
   useEffect(() => {
     loadPage();
@@ -52,7 +52,7 @@ const PersonalNotes = () => {
       },
       route: `admin/personal-notes/new-note`,
       verb: "post",
-      token: "jwt_token",
+      token: input.token,
       baseurl: true,
     });
     setIsLoading(true);
@@ -73,7 +73,7 @@ const PersonalNotes = () => {
       params: {},
       route: `admin/personal-notes/${id}/delete`,
       verb: "delete",
-      token: "jwt_token",
+      token: input.token,
       baseurl: true,
     });
     if (response.status === 200) {

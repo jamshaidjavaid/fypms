@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import Classes from "./pages/Classes";
 import Teachers from "./pages/Teachers";
@@ -16,11 +17,12 @@ import Project from "./pages/Project";
 import EditProject from "./pages/EditProject";
 import Sidebar from "../../Components/Navbar/Sidebar";
 
-const user = {
-  name: "Fazal Akram",
-};
-
 const AdminDashboard = (props) => {
+  const { input } = useSelector((state) => state.login);
+  const user = {
+    name: input.userName,
+  };
+
   return (
     <Sidebar user={user} links={props.links}>
       <Routes>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import Dashboard from "./pages/Dashboard";
 import Project from "./pages/Project";
@@ -10,12 +11,12 @@ import Settings from "./pages/Settings";
 import ChatMeetings from "./pages/ChatMeetings";
 import PersonalNotes from "./pages/PersonalNotes";
 
-const user = {
-  name: "Muhammad Ahtesham",
-  id: "641db1a377ffbbcb6dd25802",
-};
-
 const StudentDashboard = (props) => {
+  const { input } = useSelector((state) => state.login);
+  const user = {
+    name: input.userName,
+    id: input.user_id,
+  };
   return (
     <Sidebar user={user} links={props.links}>
       <Routes>

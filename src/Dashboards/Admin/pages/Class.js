@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Form, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 
@@ -27,6 +28,7 @@ const initialState = {
 };
 
 const Class = () => {
+  const { token } = useSelector((state) => state.login.input);
   const [pageState, setPageState] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
@@ -59,7 +61,7 @@ const Class = () => {
         params: { ...formState },
         route: `admin/classes/${classId}/edit-timetable`,
         verb: "patch",
-        token: "jwt_token",
+        token: token,
         baseurl: true,
       });
       if (response.status === 200) {
@@ -89,7 +91,7 @@ const Class = () => {
         params: { classId },
         route: `admin/classes/${classId}`,
         verb: "get",
-        token: "jwt_token",
+        token,
         baseurl: true,
       });
 
@@ -102,15 +104,10 @@ const Class = () => {
       }
     };
     loadPage();
-  }, [classId]);
+  }, [classId, token]);
 
   if (!isLoading) {
     timetable = pageState.myClass.timetable;
-    // const formatDate = (timestamp) => {
-    //   const options = { month: "short", day: "numeric", year: "numeric" };
-    //   const date = new Date(timestamp);
-    //   return date.toLocaleDateString("en-US", options);
-    // };
     const formatDate = (timestamp) => {
       const date = new Date(timestamp);
       return date.toISOString().slice(0, 10);

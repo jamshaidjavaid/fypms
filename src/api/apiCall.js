@@ -9,11 +9,15 @@ export const ApiCall = async ({ params, route, verb, token, baseurl }) => {
     } else {
       url = `${BASE_URL}/${route}`;
     }
-    // console.log("url", url);
-    // console.log("token", token);
-    // console.log("params", params);
+
+    let headers = {};
+
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
 
     let response = null;
+
     switch (verb) {
       case "get":
         const queryString = Object.keys(params)
@@ -22,43 +26,16 @@ export const ApiCall = async ({ params, route, verb, token, baseurl }) => {
               encodeURIComponent(key) + "=" + encodeURIComponent(params[key])
           )
           .join("&");
-        response = await axios.get(
-          `${url}?${queryString}`,
-          token ? { headers: { "x-access-token": token } } : null
-        );
+        response = await axios.get(`${url}?${queryString}`, { headers });
         break;
       case "post":
-        response = await axios.post(
-          url,
-          params,
-
-          token
-            ? { headers: { "x-access-token": token } }
-            : {
-                mode: "no-cors",
-                credentials: "same-origin",
-                headers: {
-                  "Access-Control-Allow-Origin": "http://localhost:3000",
-                  "Content-Type": "application/json",
-                },
-              }
-        );
+        response = await axios.post(url, params, { headers });
         break;
-
       case "put":
-        response = await axios.put(
-          url,
-          params,
-
-          token ? { headers: { "x-access-token": token } } : null
-        );
+        response = await axios.put(url, params, { headers });
         break;
       case "patch":
-        response = await axios.patch(
-          url,
-          params,
-          token ? { headers: { "x-access-token": token } } : null
-        );
+        response = await axios.patch(url, params, { headers });
         break;
       case "delete":
         const queryStr = Object.keys(params)
@@ -67,28 +44,26 @@ export const ApiCall = async ({ params, route, verb, token, baseurl }) => {
               encodeURIComponent(key) + "=" + encodeURIComponent(params[key])
           )
           .join("&");
-        response = await axios.delete(
-          `${url}?${queryStr}`,
-          token ? { headers: { "x-access-token": token } } : null,
-          params
-        );
+        response = await axios.delete(`${url}?${queryStr}`, {
+          headers,
+          params,
+        });
         break;
-
       default:
-        return { code: "400", response: "method not found" };
+        return { status: 400, response: "Method not found" };
     }
 
     if (response) {
-      return { status: 200, response: response.data };
+      return { status: response.status, response: response.data };
     } else {
       return response;
     }
-  } catch (e) {
+  } catch (error) {
     return {
-      status: 400,
-      response: e?.response?.data
-        ? e?.response?.data
-        : { message: e.toString() },
+      status: error.response ? error.response.status : 400,
+      response: error.response
+        ? error.response.data
+        : { message: error.toString() },
     };
   }
 };

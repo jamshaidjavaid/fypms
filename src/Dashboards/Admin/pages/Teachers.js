@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { BiSearchAlt } from "react-icons/bi";
 import { Form } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
 import { ApiCall } from "../../../api/apiCall";
 
@@ -10,6 +11,7 @@ import SpinnerModal from "../../../Components/UI/SpinnerModal";
 import classes from "./Teachers.module.css";
 
 const Teachers = () => {
+  const { token } = useSelector((state) => state.login.input);
   const [teachers, setTeachers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -20,7 +22,7 @@ const Teachers = () => {
         params: {},
         route: `admin/teachers`,
         verb: "get",
-        token: "jwt_token",
+        token,
         baseurl: true,
       });
 
@@ -33,7 +35,7 @@ const Teachers = () => {
       }
     };
     loadPage();
-  }, []);
+  }, [token]);
 
   const searchHandler = (e) => {
     e.preventDefault();
@@ -47,11 +49,12 @@ const Teachers = () => {
   let teachersProfiles;
 
   if (!isLoading) {
-    const filteredTeachers = teachers.filter(
-      (teacher) =>
-        teacher.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        teacher.empId.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const filteredTeachers =
+      teachers?.filter(
+        (teacher) =>
+          teacher.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          teacher.empId.toLowerCase().includes(searchQuery.toLowerCase())
+      ) || [];
 
     teachersProfiles =
       filteredTeachers.length > 0 ? (

@@ -1,14 +1,15 @@
 import { Table, Modal } from "react-bootstrap";
 import { MultiSelect } from "react-multi-select-component";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-
 import { ApiCall } from "../../api/apiCall";
 import Button from "../UI/Button";
 import classes from "./SupervisorsTable.module.css";
 
 const SupervisorsTable = (props) => {
+  const { token } = useSelector((state) => state.login.input);
   const [supervisors, setSupervisors] = useState(props.supervisors);
   const [limit, setLimit] = useState(3);
   const [showModal, setShowModal] = useState(false);
@@ -38,7 +39,7 @@ const SupervisorsTable = (props) => {
           params: { classId },
           route: "admin/forms/add-supervisor/data",
           verb: "get",
-          token: "jwt_token",
+          token,
           baseurl: true,
         });
 
@@ -48,12 +49,6 @@ const SupervisorsTable = (props) => {
           label: teacher.name,
         }));
         setTeachers(teacherOptions);
-        // const supervisors = response.response.supervisors;
-        // const supervisorsSelected = supervisors.map((teacher) => ({
-        //   value: teacher.id,
-        //   label: teacher.name,
-        // }));
-        // setSelected(supervisorsSelected);
       } catch (error) {
         console.log(error);
       }
@@ -79,7 +74,7 @@ const SupervisorsTable = (props) => {
         },
         route: `admin/classes/${classId}/assign-supervisor`,
         verb: "patch",
-        token: "jwt_token",
+        token,
         baseurl: true,
       });
       console.log(response.response);

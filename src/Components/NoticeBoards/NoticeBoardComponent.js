@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Modal, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 import { ApiCall } from "../../api/apiCall";
 
@@ -19,6 +20,7 @@ const initialState = {
 };
 
 const NoticeBoardComponent = (props) => {
+  const { token } = useSelector((state) => state.login.input);
   const isAdmin = props.isAdmin;
   const [limit, setLimit] = useState(6);
   const [notices, setNotices] = useState(props.notices);
@@ -42,7 +44,7 @@ const NoticeBoardComponent = (props) => {
             params: { receiverEntity: formData.receiverEntity },
             route: `admin/forms/new-notice/data`,
             verb: "get",
-            token: "jwt_token",
+            token,
             baseurl: true,
           });
           const myData = response?.response?.data ?? [];
@@ -53,7 +55,7 @@ const NoticeBoardComponent = (props) => {
       };
       loadFormData();
     }
-  }, [formData.receiverEntity]);
+  }, [formData.receiverEntity, token]);
 
   const handleCloseModal = () => {
     setShowModal(false);
@@ -139,7 +141,7 @@ const NoticeBoardComponent = (props) => {
             params: { ...formData },
             route: `admin/notice-board/new-notice`,
             verb: "post",
-            token: "jwt_token",
+            token,
             baseurl: true,
           });
 
@@ -172,7 +174,7 @@ const NoticeBoardComponent = (props) => {
         params: {},
         route: `admin/notice-board/${id}/delete`,
         verb: "delete",
-        token: "jwt_token",
+        token,
         baseurl: true,
       });
       if (response.status === 200) {

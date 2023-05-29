@@ -1,6 +1,7 @@
 import { Table, Modal } from "react-bootstrap";
 import { MultiSelect } from "react-multi-select-component";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -10,6 +11,8 @@ import classes from "./SupervisorsTable.module.css";
 
 const ExaminersTable = (props) => {
   // const { examiners } = props;
+  const { token } = useSelector((state) => state.login.input);
+
   const [examiners, setExaminers] = useState(props.examiners);
 
   const [limit, setLimit] = useState(4);
@@ -40,7 +43,7 @@ const ExaminersTable = (props) => {
           params: { classId },
           route: "admin/forms/add-examiner/data",
           verb: "get",
-          token: "jwt_token",
+          token,
           baseurl: true,
         });
 
@@ -75,7 +78,7 @@ const ExaminersTable = (props) => {
         },
         route: `admin/classes/${classId}/assign-examiner`,
         verb: "patch",
-        token: "jwt_token",
+        token,
         baseurl: true,
       });
       console.log(response.response);

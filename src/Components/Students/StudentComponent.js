@@ -1,7 +1,4 @@
 import { Card } from "react-bootstrap";
-// import { Link } from "react-router-dom";
-
-// import Button from "../../Components/UI/Button";
 import classes from "./StudentComponent.module.css";
 
 const TeacherComponent = (props) => {
@@ -17,13 +14,6 @@ const TeacherComponent = (props) => {
           <Card.Text>
             Roll No: <span>{props.student.rollNo}</span>
           </Card.Text>
-          {/* {props.button === false ? (
-            ""
-          ) : (
-            <Link to={`./${props.student.id}`}>
-              <Button>Details</Button>
-            </Link>
-          )} */}
         </Card.Body>
       </Card>
     </div>

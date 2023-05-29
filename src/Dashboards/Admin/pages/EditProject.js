@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import { MultiSelect } from "react-multi-select-component";
 import { Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
@@ -20,6 +21,7 @@ const initialState = {
 };
 
 const EditProject = () => {
+  const { token } = useSelector((state) => state.login.input);
   const [formData, setFormData] = useState({
     ...initialState,
   });
@@ -46,7 +48,7 @@ const EditProject = () => {
           params: {},
           route: `admin/projects/${projectId}`,
           verb: "get",
-          token: "jwt_token",
+          token,
           baseurl: true,
         });
         if (response.status === 200) {
@@ -71,7 +73,7 @@ const EditProject = () => {
           params: {},
           route: "admin/classes",
           verb: "get",
-          token: "jwt_token",
+          token,
           baseurl: true,
         });
         setClasses(response?.response?.classes ?? []);
@@ -80,7 +82,7 @@ const EditProject = () => {
       }
     };
     loadDataOnStart();
-  }, [projectId]);
+  }, [projectId, token]);
 
   // Fetch students and supervisors when class is chosen
   useEffect(() => {
@@ -91,7 +93,7 @@ const EditProject = () => {
             params: { classId: formData.classId, all: true },
             route: `admin/forms/new-project/data`,
             verb: "get",
-            token: "jwt_token",
+            token,
             baseurl: true,
           });
           const myStudents = response?.response?.students ?? [];
@@ -108,7 +110,7 @@ const EditProject = () => {
       };
       loadFormData();
     }
-  }, [formData.classId]);
+  }, [formData.classId, token]);
 
   const handleTitleChange = (event) => {
     setFormData((prevData) => ({ ...prevData, title: event.target.value }));
@@ -168,7 +170,7 @@ const EditProject = () => {
           },
           route: `admin/projects/${projectId}/edit`,
           verb: "patch",
-          token: "jwt_token",
+          token,
           baseurl: true,
         });
         setIsLoading(false);

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Form, Col } from "react-bootstrap";
+import { useSelector } from "react-redux";
+
 import { toast } from "react-toastify";
 
 import { ApiCall } from "../../api/apiCall";
@@ -7,6 +9,7 @@ import { ApiCall } from "../../api/apiCall";
 import classes from "./LoginForm.module.css";
 
 const AddTaskModal = ({ userId, show, handleClose }) => {
+  const { token } = useSelector((state) => state.login.input);
   const [students, setStudents] = useState([]);
   const [validated, setValidated] = useState(false);
   const [formState, setFormState] = useState({
@@ -25,7 +28,7 @@ const AddTaskModal = ({ userId, show, handleClose }) => {
           params: { studentId: userId },
           route: "student/tasks/form-data",
           verb: "get",
-          token: "jwt_token",
+          token,
           baseurl: true,
         });
         setStudents(response?.response?.projectMembers ?? []);
@@ -35,7 +38,7 @@ const AddTaskModal = ({ userId, show, handleClose }) => {
       }
     };
     loadFormData();
-  }, [userId]);
+  }, [userId, token]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -60,7 +63,7 @@ const AddTaskModal = ({ userId, show, handleClose }) => {
         params: { studentId: userId, ...formState },
         route: `student/tasks/new-task`,
         verb: "patch",
-        token: "jwt_token",
+        token,
         baseurl: true,
       });
 

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, Fragment } from "react";
+import { useSelector } from "react-redux";
 
 import { ApiCall } from "../../../api/apiCall";
 
@@ -9,6 +10,8 @@ import CustomCard from "../../../Components/UI/CustomCard";
 import classes from "./../AdminDashboard.module.css";
 
 export const Dashboard = () => {
+  const { token } = useSelector((state) => state.login.input);
+
   const [pageState, setPageState] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const errorRef = useRef(null);
@@ -18,7 +21,7 @@ export const Dashboard = () => {
         params: {},
         route: "admin/",
         verb: "get",
-        token: "jwt_token",
+        token,
         baseurl: true,
       });
 
@@ -34,7 +37,7 @@ export const Dashboard = () => {
     };
 
     fetchClasses();
-  }, []);
+  }, [token]);
 
   return (
     <div>

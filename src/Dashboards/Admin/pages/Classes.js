@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Modal, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 
@@ -9,6 +10,7 @@ import SpinnerModal from "../../../Components/UI/SpinnerModal";
 import classes from "./Classes.module.css";
 
 const Classes = () => {
+  const { token } = useSelector((state) => state.login.input);
   const [classesList, setClassesList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -21,7 +23,7 @@ const Classes = () => {
           params: {},
           route: "admin/classes",
           verb: "get",
-          token: "jwt_token",
+          token,
           baseurl: true,
         });
         setClassesList(response?.response?.classes ?? []);
@@ -32,7 +34,7 @@ const Classes = () => {
       }
     };
     loadClasses();
-  }, []);
+  }, [token]);
 
   const deleteClassHandler = async () => {
     try {
@@ -40,7 +42,7 @@ const Classes = () => {
         params: {},
         route: `admin/classes/${classIdToDelete}/delete`,
         verb: "delete",
-        token: "jwt_token",
+        token,
         baseurl: true,
       });
 

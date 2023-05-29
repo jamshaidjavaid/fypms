@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 import { ApiCall } from "../../../api/apiCall";
@@ -34,6 +35,7 @@ const getYearsOptions = (startYear, endYear) => {
 };
 
 const CreateClass = () => {
+  const { token } = useSelector((state) => state.login.input);
   const [formData, setFormData] = useState({
     ...initialState,
   });
@@ -139,7 +141,7 @@ const CreateClass = () => {
           },
           route: `admin//classes/new-class`,
           verb: "post",
-          token: "jwt_token",
+          token,
           baseurl: true,
         });
 

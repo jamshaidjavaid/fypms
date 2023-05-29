@@ -1,6 +1,7 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 import { ApiCall } from "../../../api/apiCall";
 
@@ -11,6 +12,7 @@ import Button from "../../../Components/UI/Button";
 import classes from "./Project.module.css";
 
 const Project = () => {
+  const { token } = useSelector((state) => state.login.input);
   const [pageState, setPageState] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const { projectId } = useParams();
@@ -24,7 +26,7 @@ const Project = () => {
         params: { projectId },
         route: `admin/projects/${projectId}`,
         verb: "get",
-        token: "jwt_token",
+        token,
         baseurl: true,
       });
 
@@ -37,7 +39,7 @@ const Project = () => {
       }
     };
     loadPage();
-  }, [projectId]);
+  }, [projectId, token]);
 
   if (!isLoading) {
     members = pageState.project.memberNames.map((member) => {
@@ -61,7 +63,7 @@ const Project = () => {
         params: { id },
         route: `admin/projects/${id}/delete`,
         verb: "delete",
-        token: "jwt_token",
+        token,
         baseurl: true,
       });
 
